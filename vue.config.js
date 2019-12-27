@@ -7,7 +7,7 @@ function resolve (dir) {
 
 const name = 'Csdoker\'s Blog'
 
-const port = process.env.port || process.env.npm_config_port || 8080 // dev port
+const port = process.env.port || process.env.npm_config_port || 8000 // dev port
 
 module.exports = {
   publicPath: '/',
