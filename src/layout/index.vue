@@ -19,6 +19,9 @@ export default {
 
 <style lang="scss" scoped>
   .app-wrapper {
-
+    position: relative;
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
   }
 </style>
