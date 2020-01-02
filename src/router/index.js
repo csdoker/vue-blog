@@ -23,6 +23,32 @@ const routes = [
       meta: { title: '主页' }
     }]
   },
+  {
+    path: '/archive',
+    component: Layout,
+    redirect: '/archive/index',
+    children: [
+      {
+        path: 'index',
+        name: 'Archive',
+        component: () => import('@/views/archive/index'),
+        meta: { title: '归档' }
+      }
+    ]
+  },
+  {
+    path: '/photo',
+    component: Layout,
+    redirect: '/photo/index',
+    children: [
+      {
+        path: 'index',
+        name: 'Photo',
+        component: () => import('@/views/photo/index'),
+        meta: { title: '相册' }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

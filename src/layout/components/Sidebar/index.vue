@@ -16,8 +16,8 @@
           <ul class="menu-list">
             <template v-for="route in routes">
               <li class="menu-item" v-if="!route.hidden" :key="route.path">
-                <router-link :to="{ name: route.children.name, params: {} }" class="menu-link">
-                  {{ route.children.meta.title }}
+                <router-link :to="{ name: route.children[0].name, params: {} }" class="menu-link">
+                  {{ route.children[0].meta.title }}
                 </router-link>
               </li>
             </template>
@@ -29,14 +29,14 @@
         </nav>
         <nav class="header-nav">
           <div class="social">
-            <a class="social-link github" target="_blank" href="https://github.com/csdoker" title="github">
-              <i class="icon-github"></i>
+            <a class="social-link" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=758371536&site=qq&menu=yes" title="qq">
+              <i class="icon iconfont icon-QQ-circle-fill"></i>
             </a>
-            <a class="social-link segmentfault" target="_blank" href="https://segmentfault.com/u/csdoker" title="segmentfault">
-              <i class="icon-segmentfault"></i>
+            <a class="social-link" target="_blank" href="https://github.com/csdoker" title="github">
+              <i class="icon iconfont icon-github-fill"></i>
             </a>
-            <a class="social-link zhihu" target="_blank" href="https://www.zhihu.com/people/csdoker" title="zhihu">
-              <i class="icon-zhihu"></i>
+            <a class="social-link" target="_blank" href="https://www.zhihu.com/people/csdoker" title="zhihu">
+              <i class="icon iconfont icon-zhihu-circle-fill"></i>
             </a>
           </div>
         </nav>
@@ -78,7 +78,6 @@ export default {
     .header-innner {
       position: relative;
       width: 100%;
-      height: 300px;
       .header-profilepic {
         display: -webkit-box;
         -webkit-box-orient: horizontal;
@@ -161,95 +160,46 @@ export default {
         }
       }
       .header-smart-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 12px;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         .smart-menu-link {
           color: #696969;
-          &:after {
-            content: '/';
-          }
-          &:last-child:after {
-            content: '';
-          }
+          margin: 0 6px;
           &:hover {
             color: #b0a0aa;
           }
         }
       }
       .header-nav {
-        position: absolute;
         width: 100%;
         transition: -webkit-transform .3s ease-in;
         transition: transform .3s ease-in;
         transition: transform .3s ease-in, -webkit-transform .3s ease-in;
         .social {
-          margin-top: 10px;
-          text-align: center;
-          display: -webkit-box;
-          display: -ms-flexbox;
           display: flex;
-          -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-          -webkit-box-pack: center;
-          -ms-flex-pack: center;
+          align-items: center;
           justify-content: center;
           .social-link {
-            border-radius: 50%;
-            display: inline-block;
-            vertical-align: middle;
-            zoom: 1;
-            margin: 0 8px 15px;
+            margin: 0 8px;
             transition: .3s;
-            text-align: center;
-            color: #fff;
             opacity: .7;
-            width: 28px;
-            height: 28px;
-            line-height: 28px;
+            .icon {
+              font-size: 30px;
+              &.icon-QQ-circle-fill {
+                color: #34baad;
+              }
+              &.icon-github-fill {
+                color: #afb6ca;
+              }
+              &.icon-zhihu-circle-fill {
+                color: #0078d8;
+              }
+            }
             &:hover {
               opacity: 1;
-            }
-            &.github {
-              background-color: #afb6ca;
-              border: 1px solid #afb6ca;
-              &:hover {
-                border: 1px solid #afb6ca;
-              }
-            }
-            &.segmentfault {
-              background-color: #009a61;
-              border: 1px solid #009a61;
-              &:hover {
-                border: 1px solid #009a61;
-              }
-            }
-            &.zhihu {
-              background-color: #0078d8;
-              border: 1px solid #0078d8;
-              &:hover {
-                border: 1px solid #0078d8;
-              }
-            }
-            &.qq {
-              background-color: #34baad;
-              border: 1px solid #34baad;
-              &:hover {
-                border: 1px solid #34baad;
-              }
-            }
-            &.weixin {
-              background-color: #4caf50;
-              border: 1px solid #4caf50;
-              &:hover {
-                border: 1px solid #4caf50;
-              }
-            }
-            &.bilibili {
-              background-color: #e15280;
-              border: 1px solid #e15280;
-              &:hover {
-                border: 1px solid #e15280;
-              }
             }
           }
         }
