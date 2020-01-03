@@ -14,13 +14,9 @@
         <p class="header-subtitle">每一位少年都有一颗屠龙的心</p>
         <nav class="header-menu">
           <ul class="menu-list">
-            <template v-for="route in routes">
-              <li class="menu-item" v-if="!route.hidden" :key="route.path">
-                <router-link :to="{ name: route.children[0].name, params: {} }" class="menu-link">
-                  {{ route.children[0].meta.title }}
-                </router-link>
-              </li>
-            </template>
+            <li class="menu-item" v-for="route in getRoute()" :key="route.path">
+              <router-link :to="{ name: route.name, params: {} }" class="menu-link" :key="route.path">{{ route.meta.title }}</router-link>
+            </li>
           </ul>
         </nav>
         <nav class="header-smart-menu">
@@ -51,6 +47,11 @@ export default {
   computed: {
     routes () {
       return this.$router.options.routes
+    }
+  },
+  methods: {
+    getRoute () {
+      return this.routes.filter(item => !item.hidden)[0].children
     }
   }
 }

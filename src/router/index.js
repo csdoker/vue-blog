@@ -16,33 +16,21 @@ const routes = [
     path: '/',
     component: Layout,
     redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'Home',
-      component: () => import('@/views/home/index'),
-      meta: { title: '主页' }
-    }]
-  },
-  {
-    path: '/archive',
-    component: Layout,
-    redirect: '/archive/index',
     children: [
       {
-        path: 'index',
+        path: 'home',
+        name: 'Home',
+        component: () => import('@/views/home/index'),
+        meta: { title: '主页' }
+      },
+      {
+        path: 'archive',
         name: 'Archive',
         component: () => import('@/views/archive/index'),
         meta: { title: '归档' }
-      }
-    ]
-  },
-  {
-    path: '/photo',
-    component: Layout,
-    redirect: '/photo/index',
-    children: [
+      },
       {
-        path: 'index',
+        path: 'photo',
         name: 'Photo',
         component: () => import('@/views/photo/index'),
         meta: { title: '相册' }
