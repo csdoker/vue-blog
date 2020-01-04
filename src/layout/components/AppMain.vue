@@ -16,3 +16,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.app-main {
+  position: absolute;
+  right: 0;
+  min-height: 100%;
+  background-color: #eaeaea;
+  left: 300px;
+  transition: all 0.2s ease-in;
+}
+</style>
