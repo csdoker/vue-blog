@@ -1,19 +1,29 @@
 <template>
   <div class="home-container">
     <article-list />
-    <pagination />
+    <pager :hide-if-one-page="false" :total-page="20" :current-page.sync="currentPage" @update:currentPage="update" />
   </div>
 </template>
 
 <script>
 import ArticleList from './article-list'
-import Pagination from '@/components/Pagination'
+import Pager from '@/components/Pager'
 
 export default {
   name: 'Home',
   components: {
     ArticleList,
-    Pagination
+    Pager
+  },
+  data () {
+    return {
+      currentPage: 1
+    }
+  },
+  methods: {
+    update (n) {
+      console.log(n)
+    }
   }
 }
 </script>

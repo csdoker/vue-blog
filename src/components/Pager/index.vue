@@ -1,31 +1,28 @@
 <template>
-  <div class="pagination" :class="{hide: hideIfOnePage && totalPage <= 1}">
-    <span class="gulu-pager-nav prev" @click="onClickPage(currentPage - 1)" :class="{disabled: currentPage === 1}">
-      <!-- <g-icon name="left"></g-icon> -->
-      &lt;
+  <div class="pager" :class="{hide: hideIfOnePage && totalPage <= 1}">
+    <span class="pager-nav prev" @click="onClickPage(currentPage - 1)" :class="{disabled: currentPage === 1}">
+      <i class="pager-nav-icon iconfont icon-left"></i>
     </span>
     <template v-for="(page, index) in pages">
       <template v-if="page === currentPage">
-        <span :key="index" class="gulu-pager-item current">{{page}}</span>
+        <span :key="index" class="pager-item current">{{page}}</span>
       </template>
       <template v-else-if="page === '...'">
-        <!-- <g-icon name="dots" :key="index" class="gulu-pager-separator"></g-icon> -->
-        ...
+        <i class="pager-separator iconfont icon-ellipsis" :key="index"></i>
       </template>
       <template v-else>
-        <span :key="index" class="gulu-pager-item other" @click="onClickPage(page)">{{page}}</span>
+        <span :key="index" class="pager-item other" @click="onClickPage(page)">{{page}}</span>
       </template>
     </template>
-    <span class="gulu-pager-nav next" @click="onClickPage(currentPage + 1)" :class="{disabled: currentPage === totalPage}">
-      <!-- <g-icon name="right"></g-icon> -->
-      &gt;
+    <span class="pager-nav next" @click="onClickPage(currentPage + 1)" :class="{disabled: currentPage === totalPage}">
+      <i class="pager-nav-icon iconfont icon-right"></i>
     </span>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Pagination',
+  name: 'Pager',
   props: {
     totalPage: {
       type: Number,
@@ -85,61 +82,71 @@ function unique (array) {
 </script>
 
 <style lang="scss" scoped>
-.gulu-pager {
+.pager {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  $width: 20px;
-  $height: 20px;
-  $font-size: 12px;
-  $border-radius: 4px;
-  $grey: #eee;
-  $blue: #4a90e2;
+  flex-wrap: wrap;
   user-select: none;
   &.hide {
     display: none;
   }
-  &-separator {
-    width: $width;
-    font-size: $font-size;
-    border: none;
-    cursor: default;
-  }
-  &-item {
-    border: 1px solid #e1e1e1;
-    border-radius: $border-radius;
-    padding: 0 4px;
-    font-size: $font-size;
-    min-width: $width;
-    height: $height;
-    margin: 0 4px;
+  .pager-separator {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    width: 20px;
+    line-height: 26px;
+    font-size: 20px;
+    color: #4d4d4d;
+    margin: 0 6px;
+    cursor: default;
+  }
+  .pager-item {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4d4d4d;
+    border-radius: 2px;
+    font-size: 12px;
+    min-width: 20px;
+    width: 20px;
+    height: 26px;
+    line-height: 26px;
+    color: #fff;
+    margin: 0 6px;
     cursor: pointer;
-    &.current, &:hover {
-      border-color: $blue;
+    &:hover {
+      background-color: #5e5e5e
     }
     &.current {
       cursor: default;
+      background-color: #88acdb;
     }
   }
-  &-nav {
+  .pager-nav {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: $grey;
-    height: $height;
-    width: $width;
-    border-radius: $border-radius;
-    font-size: $font-size;
-    margin: 0 4px;
+    margin: 0 28px;
     cursor: pointer;
+    .pager-nav-icon {
+      font-size: 20px;
+      line-height: 26px;
+      color: #4d4d4d;
+    }
     &.disabled {
       cursor: default;
-      svg {
-        fill: darken($grey, 30%);
+      .pager-nav-icon {
+        color: darken(#eee, 20%);
       }
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  .pager {
+    .pager-nav {
+      margin: 0 14px;
     }
   }
 }

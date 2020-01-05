@@ -122,6 +122,7 @@ export default {
 
 <style scoped lang="scss">
 .article-list {
+  margin-bottom: 30px;
   .article-item {
     position: relative;
     margin-bottom: 30px;
