@@ -212,7 +212,7 @@ export default {
   }
 }
 @media screen and (max-width: 800px) {
-  .app-sidebar {
+  .sidebar-container {
     display: none
   }
 }

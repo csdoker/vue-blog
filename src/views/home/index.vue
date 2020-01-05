@@ -32,4 +32,9 @@ export default {
 .home-container {
   padding: 30px 30px 80px;
 }
+@media screen and (max-width: 800px) {
+  .home-container {
+    padding: 10px 0 80px;
+  }
+}
 </style>

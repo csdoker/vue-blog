@@ -232,38 +232,35 @@ export default {
     }
   }
 }
-// @media screen and (max-width: 800px) {
-//   .article-list {
-//     .article-item {
-//       padding: 10px;
-//       margin: 10px 0;
-//       border: 0;
-//       font-size: 16px;
-//       color: #555;
-//       .article-inner {
-//         .article-header {
-//           border-left: none;
-//           padding: 0;
-//           margin-bottom: 0;
-//           .article-header-inner {
-//             .article-title {
-//               display: block;
-//               font-size: 18px;
-//               margin-bottom: 10px;
-//             }
-//           }
-//         }
-//         .article-entry {
-//           padding: 10px 0 30px;
-//         }
-//         .article-info {
-//           min-height: 40px;
-//           padding-top: 10px;
-//           margin: 0;
-//           border-top: 1px solid #ddd;
-//         }
-//       }
-//     }
-//   }
-// }
+@media screen and (max-width: 800px) {
+  .article-list {
+    .article-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: none;
+      font-size: 16px;
+      color: #555;
+      .article-inner {
+        .article-header {
+          border-left: none;
+          padding: 0;
+          margin-bottom: 10px;
+          .article-header-inner {
+            .article-title {
+              font-size: 18px;
+              margin-bottom: 10px;
+            }
+          }
+        }
+        .article-entry {
+          padding: 0;
+        }
+        .article-info {
+          margin: 0;
+          padding: 10px 0 0;
+        }
+      }
+    }
+  }
+}
 </style>
