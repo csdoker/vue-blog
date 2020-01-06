@@ -10,7 +10,7 @@
           <div class="article-header-inner">
             <router-link
               tag="h1"
-              :to="{ name: 'Detail', params: { id: articleData.id } }"
+              :to="{ name: 'Article', params: { id: articleData.id } }"
               class="article-title"
             >
               {{ articleData.title }}

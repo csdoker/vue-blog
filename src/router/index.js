@@ -31,6 +31,13 @@ const routes = [
         meta: { title: '主页' }
       },
       {
+        path: '/article/:id',
+        name: 'Article',
+        component: () => import('@/views/article/index'),
+        meta: { title: '文章' },
+        hidden: true
+      },
+      {
         path: 'archive',
         name: 'Archive',
         component: () => import('@/views/archive/index'),

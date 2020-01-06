@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     getRoute () {
-      return this.routes.filter(item => !item.hidden)[0].children
+      return this.routes.filter(item => !item.hidden)[0].children.filter(item => !item.hidden)
     }
   }
 }
