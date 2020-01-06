@@ -11,7 +11,7 @@ const port = process.env.port || process.env.npm_config_port || 8000 // dev port
 
 module.exports = {
   publicPath: '/',
-  outputDir: 'dist',
+  outputDir: 'docs',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
