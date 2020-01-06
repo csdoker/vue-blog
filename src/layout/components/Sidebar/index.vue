@@ -1,40 +1,38 @@
 <template>
   <div class="sidebar-container">
     <div class="sidebar-overlay"></div>
-    <div class="sidebar-header">
-      <header class="header-innner">
-        <a class="header-profilepic" href="javascript:;">
-          <img class="header-avatar" src="@/assets/image/avatar.jpg" alt="">
+    <div class="sidebar-wrapper">
+      <header class="sidebar-inner">
+        <a class="profilepic" href="javascript:;">
+          <img class="avatar" src="@/assets/image/avatar.jpg" alt="">
         </a>
-        <hgroup class="header-author">
+        <hgroup class="author">
           <h1 class="author-wrap">
             <a class="author-name" href="javascript:;">Csdoker</a>
           </h1>
         </hgroup>
-        <p class="header-subtitle">每一位少年都有一颗屠龙的心</p>
-        <nav class="header-menu">
+        <p class="subtitle">每一位少年都有一颗屠龙的心</p>
+        <nav class="menu">
           <ul class="menu-list">
             <li class="menu-item" v-for="route in getRoute()" :key="route.path">
               <router-link :to="{ name: route.name, params: {} }" class="menu-link" :key="route.path">{{ route.meta.title }}</router-link>
             </li>
           </ul>
         </nav>
-        <nav class="header-smart-menu">
+        <nav class="smart-menu">
           <a class="smart-menu-link" href="javascript:;">搜索</a>
           <a class="smart-menu-link" href="javascript:;">友链</a>
         </nav>
-        <nav class="header-nav">
-          <div class="social">
-            <a class="social-link" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=758371536&site=qq&menu=yes" title="qq">
-              <i class="icon iconfont icon-QQ-circle-fill"></i>
-            </a>
-            <a class="social-link" target="_blank" href="https://github.com/csdoker" title="github">
-              <i class="icon iconfont icon-github-fill"></i>
-            </a>
-            <a class="social-link" target="_blank" href="https://www.zhihu.com/people/csdoker" title="zhihu">
-              <i class="icon iconfont icon-zhihu-circle-fill"></i>
-            </a>
-          </div>
+        <nav class="social">
+          <a class="social-link" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=758371536&site=qq&menu=yes" title="qq">
+            <i class="icon iconfont icon-QQ-circle-fill"></i>
+          </a>
+          <a class="social-link" target="_blank" href="https://github.com/csdoker" title="github">
+            <i class="icon iconfont icon-github-fill"></i>
+          </a>
+          <a class="social-link" target="_blank" href="https://www.zhihu.com/people/csdoker" title="zhihu">
+            <i class="icon iconfont icon-zhihu-circle-fill"></i>
+          </a>
         </nav>
       </header>
     </div>
@@ -43,7 +41,7 @@
 
 <script>
 export default {
-  name: 'Siderbar',
+  name: 'Sidebar',
   computed: {
     routes () {
       return this.$router.options.routes
@@ -72,14 +70,14 @@ export default {
     height: 180px;
     background-color: #4d4d4d;
   }
-  .sidebar-header {
+  .sidebar-wrapper {
     width: 76%;
     text-align: center;
     margin: 112px auto 0;
-    .header-innner {
+    .sidebar-inner {
       position: relative;
       width: 100%;
-      .header-profilepic {
+      .profilepic {
         display: -webkit-box;
         -webkit-box-orient: horizontal;
         -webkit-box-pack: center;
@@ -95,7 +93,7 @@ export default {
         overflow: hidden;
         background-color: #88acdb;
         transition: all .2s ease-in;
-        .header-avatar {
+        .avatar {
           border-radius: 300px;
           opacity: 1;
           transition: all .2s ease-in;
@@ -104,7 +102,7 @@ export default {
           max-width: 100%;
         }
       }
-      .header-author {
+      .author {
         display: block;
         .author-wrap {
           text-align: center;
@@ -122,7 +120,7 @@ export default {
           }
         }
       }
-      .header-subtitle {
+      .subtitle {
         text-align: center;
         color: #999;
         font-size: 14px;
@@ -135,7 +133,7 @@ export default {
         display: block;
         margin-bottom: 20px;
       }
-      .header-menu {
+      .menu {
         font-weight: 300;
         line-height: 32px;
         text-transform: uppercase;
@@ -160,7 +158,7 @@ export default {
           }
         }
       }
-      .header-smart-menu {
+      .smart-menu {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -174,34 +172,32 @@ export default {
           }
         }
       }
-      .header-nav {
+      .social {
         width: 100%;
         transition: -webkit-transform .3s ease-in;
         transition: transform .3s ease-in;
         transition: transform .3s ease-in, -webkit-transform .3s ease-in;
-        .social {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          .social-link {
-            margin: 0 8px;
-            transition: .3s;
-            opacity: .7;
-            .icon {
-              font-size: 30px;
-              &.icon-QQ-circle-fill {
-                color: #34baad;
-              }
-              &.icon-github-fill {
-                color: #afb6ca;
-              }
-              &.icon-zhihu-circle-fill {
-                color: #0078d8;
-              }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .social-link {
+          margin: 0 8px;
+          transition: .3s;
+          opacity: .7;
+          .icon {
+            font-size: 30px;
+            &.icon-QQ-circle-fill {
+              color: #34baad;
             }
-            &:hover {
-              opacity: 1;
+            &.icon-github-fill {
+              color: #afb6ca;
             }
+            &.icon-zhihu-circle-fill {
+              color: #0078d8;
+            }
+          }
+          &:hover {
+            opacity: 1;
           }
         }
       }

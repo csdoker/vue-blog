@@ -34,6 +34,12 @@ const routes = [
         name: 'Photo',
         component: () => import('@/views/photo/index'),
         meta: { title: '相册' }
+      },
+      {
+        path: 'about',
+        name: 'About',
+        component: () => import('@/views/about/index'),
+        meta: { title: '关于' }
       }
     ]
   },
