@@ -18,7 +18,7 @@ const blogRoutes = BlogEntries.map(article => {
   return {
     path: article.name,
     name: article.name,
-    component: () => import(`@/posts/${article.name}.md`)
+    component: () => import(`@/post/${article.name}.md`)
   }
 })
 

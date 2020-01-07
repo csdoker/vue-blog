@@ -22,7 +22,8 @@
           </div>
         </header>
         <div class="article-entry">
-          测试数据
+          <!-- 测试数据 -->
+          <test></test>
         </div>
         <div class="article-info">
           <div class="article-tag">
@@ -45,9 +46,13 @@
 
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
+import test from '@/post/test.md'
 
 export default {
   name: 'ArticleList',
+  components: {
+    test
+  },
   data () {
     return {
       articleDatas: [
@@ -123,6 +128,11 @@ export default {
     articles () {
       return BLOGENTRIES
     }
+  },
+  created () {
+    // 走摘要里拿列表显示的数据
+    // 暂时先这样处理，等后台完成后，让后台处理文章摘要的截取逻辑
+    console.log(test)
   }
 }
 </script>
