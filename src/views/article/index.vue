@@ -13,7 +13,7 @@
         </header>
         <div class="article-entry">
           <div class="article-data">
-            测试数据
+            <router-view />
             <!-- markdown渲染数据 -->
             <!-- <vue-markdown v-if="articleData.articleContent" :source="articleData.articleContent"></vue-markdown> -->
           </div>

@@ -5,6 +5,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 
 import getPageTitle from '@/utils/get-page-title'
+import BlogEntries from '@/data/blogs.json'
 
 /* Layout */
 import Layout from '@/layout'
@@ -12,6 +13,14 @@ import Layout from '@/layout'
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 Vue.use(Router)
+
+const blogRoutes = BlogEntries.map(article => {
+  return {
+    path: article.name,
+    name: article.name,
+    component: () => import(`@/posts/${article.name}.md`)
+  }
+})
 
 const routes = [
   {
@@ -31,10 +40,11 @@ const routes = [
         meta: { title: '主页' }
       },
       {
-        path: '/article/:id',
+        path: 'article',
         name: 'Article',
         component: () => import('@/views/article/index'),
         meta: { title: '文章' },
+        children: blogRoutes,
         hidden: true
       },
       {
@@ -62,7 +72,7 @@ const routes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: routes
 })

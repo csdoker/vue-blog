@@ -1,8 +1,8 @@
 <template>
   <div class="article-list">
     <article
-      v-for="articleData in articleDatas"
-      :key="articleData.id"
+      v-for="article in articles"
+      :key="article.id"
       class="article-item"
     >
       <div class="article-inner">
@@ -10,14 +10,14 @@
           <div class="article-header-inner">
             <router-link
               tag="h1"
-              :to="{ name: 'Article', params: { id: articleData.id } }"
+              :to="{ name: article.name }"
               class="article-title"
             >
-              {{ articleData.title }}
+              {{ article.title }}
             </router-link>
             <div class="article-date">
               <i class="date-icon iconfont icon-calendar"></i>
-              <span class="date-time">{{ articleData.date }}</span>
+              <span class="date-time">{{ article.date }}</span>
             </div>
           </div>
         </header>
@@ -29,11 +29,11 @@
             <i class="tag-icon iconfont icon-tag-fill"></i>
             <div
               class="tag-item"
-              v-for="(articleTag, index) in articleData.tags"
+              v-for="(tag, index) in article.tags"
               :key="index"
             >
               {{
-                articleTag.name
+                tag
               }}
             </div>
           </div>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import BLOGENTRIES from '@/data/blogs.json'
+
 export default {
   name: 'ArticleList',
   data () {
@@ -115,6 +117,11 @@ export default {
           ]
         }
       ]
+    }
+  },
+  computed: {
+    articles () {
+      return BLOGENTRIES
     }
   }
 }
