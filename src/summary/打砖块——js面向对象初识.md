@@ -1,0 +1,2 @@
+最近看完了阮一峰老师的*[面向对象编程系列](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html)*，就一时手痒想写个小demo来练练手，熟悉下面向对象的思想。选来选去，还是想找个逻辑稍微简单点的游戏来做例子，然后有一天突然想到大学时未写完的打砖块，ok！就它了！
+> 结果发现是个深坑。。/(ㄒoㄒ)/~~
