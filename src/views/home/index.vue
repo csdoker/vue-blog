@@ -1,13 +1,14 @@
 <template>
   <div class="home-container">
-    <article-list />
-    <pager :hide-if-one-page="false" :total-page="20" :current-page.sync="currentPage" @update:currentPage="update" />
+    <article-list :currentPage="currentPage" :maxCount="maxCount" />
+    <pager :hide-if-one-page="false" :total-page="pageCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
 </template>
 
 <script>
 import ArticleList from './article-list'
 import Pager from '@/components/Pager'
+import BLOGENTRIES from '@/data/blogs.json'
 
 export default {
   name: 'Home',
@@ -17,12 +18,25 @@ export default {
   },
   data () {
     return {
-      currentPage: 1
+      currentPage: 1,
+      maxCount: 5
+    }
+  },
+  computed: {
+    pageCount () {
+      let pageCount = 0
+      const articleCount = BLOGENTRIES.length
+      if (articleCount % this.maxCount === 0) {
+        pageCount = articleCount / this.maxCount
+      } else {
+        pageCount = (articleCount - articleCount % this.maxCount) / this.maxCount + 1
+      }
+      return pageCount
     }
   },
   methods: {
-    update (n) {
-      console.log(n)
+    updatePage (page) {
+      this.currentPage = page
     }
   }
 }

@@ -13,7 +13,7 @@
               :to="{ name: article.name }"
               class="article-title"
             >
-              {{ article.title }}
+              {{ article.name }}
             </router-link>
             <div class="article-date">
               <i class="date-icon iconfont icon-calendar"></i>
@@ -22,8 +22,7 @@
           </div>
         </header>
         <div class="article-entry">
-          <!-- 测试数据 -->
-          <test></test>
+          <component :is="getSummary(article.id)"></component>
         </div>
         <div class="article-info">
           <div class="article-tag">
@@ -46,93 +45,44 @@
 
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
-import test from '@/post/test.md'
+
+const components = {}
+BLOGENTRIES.forEach(article => {
+  components[`ArticleSummary${article.id}`] = () => import(`@/summary/${article.name}.md`)
+})
 
 export default {
   name: 'ArticleList',
-  components: {
-    test
-  },
+  components,
   data () {
-    return {
-      articleDatas: [
-        {
-          id: 1,
-          title: '文章标题',
-          date: '2020-01-04',
-          tags: [
-            {
-              name: 'tag1'
-            },
-            {
-              name: 'tag2'
-            }
-          ]
-        },
-        {
-          id: 2,
-          title: '文章标题',
-          date: '2020-01-04',
-          tags: [
-            {
-              name: 'tag1'
-            },
-            {
-              name: 'tag2'
-            }
-          ]
-        },
-        {
-          id: 3,
-          title: '文章标题',
-          date: '2020-01-04',
-          tags: [
-            {
-              name: 'tag1'
-            },
-            {
-              name: 'tag2'
-            }
-          ]
-        },
-        {
-          id: 4,
-          title: '文章标题',
-          date: '2020-01-04',
-          tags: [
-            {
-              name: 'tag1'
-            },
-            {
-              name: 'tag2'
-            }
-          ]
-        },
-        {
-          id: 5,
-          title: '文章标题',
-          date: '2020-01-04',
-          tags: [
-            {
-              name: 'tag1'
-            },
-            {
-              name: 'tag2'
-            }
-          ]
-        }
-      ]
+    return {}
+  },
+  props: {
+    currentPage: {
+      type: Number,
+      default: 1
+    },
+    maxCount: {
+      type: Number,
+      default: 5
     }
   },
   computed: {
     articles () {
-      return BLOGENTRIES
+      const start = (this.currentPage - 1) * this.maxCount
+      const end = start + this.maxCount
+      return BLOGENTRIES.sort((a, b) => b.id - a.id).slice(start, end)
+    }
+  },
+  methods: {
+    getSummary (id) {
+      return `article-summary-${id}`
     }
   },
   created () {
     // 走摘要里拿列表显示的数据
     // 暂时先这样处理，等后台完成后，让后台处理文章摘要的截取逻辑
-    console.log(test)
+    // console.log(test)
   }
 }
 </script>
