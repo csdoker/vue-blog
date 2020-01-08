@@ -37,6 +37,12 @@ const routes = [
         path: 'home',
         name: 'Home',
         component: () => import('@/views/home/index'),
+        // children: [
+        //   {
+        //     path: 'page/:index',
+        //     component: () => import('@/views/home/article-list/index')
+        //   }
+        // ],
         meta: { title: '主页' }
       },
       {

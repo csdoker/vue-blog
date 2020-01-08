@@ -19,17 +19,23 @@ export default {
   data () {
     return {
       currentPage: 1,
-      maxCount: 5
+      maxCount: 5,
+      totalCount: BLOGENTRIES.length
     }
   },
+  // watch: {
+  //   '$route': {
+  //     handler: 'setCurrentPage',
+  //     immediate: true
+  //   }
+  // },
   computed: {
     pageCount () {
       let pageCount = 0
-      const articleCount = BLOGENTRIES.length
-      if (articleCount % this.maxCount === 0) {
-        pageCount = articleCount / this.maxCount
+      if (this.totalCount % this.maxCount === 0) {
+        pageCount = this.totalCount / this.maxCount
       } else {
-        pageCount = (articleCount - articleCount % this.maxCount) / this.maxCount + 1
+        pageCount = (this.totalCount - this.totalCount % this.maxCount) / this.maxCount + 1
       }
       return pageCount
     }
@@ -37,7 +43,19 @@ export default {
   methods: {
     updatePage (page) {
       this.currentPage = page
+      // this.$router.push({ path: `/home/page/${page}` })
     }
+    // setCurrentPage () {
+    //   console.log(this.$route)
+    //   const index = this.$route.params.index
+    //   if (index <= this.totalCount && index >= 1) {
+    //     this.currentPage = parseInt(this.$route.params.index)
+    //   } else {
+    //     if (this.$route.name !== 'Home') {
+    //       this.$router.push({ path: `/home` })
+    //     }
+    //   }
+    // }
   }
 }
 </script>
