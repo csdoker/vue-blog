@@ -95,6 +95,7 @@ export default {
           border-bottom: 1px dotted #ddd;
 
           .article-title {
+            display: block;
             color: #696969;
             font-weight: 300;
             line-height: 36px;
