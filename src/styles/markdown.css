@@ -1,0 +1,242 @@
+.article-inner p {
+    margin: 0 0 1.75em
+}
+
+.article-inner {
+    border-color: #d1d1d1
+}
+
+.article-inner h1 {
+    font-size: 28px;
+    font-size: 1.75rem;
+    line-height: 1.25;
+    margin-top: 2em;
+    margin-bottom: 1em
+}
+
+.article-inner h2 {
+    font-size: 23px;
+    line-height: 1.2173913043;
+    margin-top: 2.4347826087em;
+    margin-bottom: 1.2173913043em
+}
+
+.article-inner h3 {
+    font-size: 19px;
+    line-height: 1.1052631579;
+    margin-top: 2.9473684211em;
+    margin-bottom: 1.4736842105em
+}
+
+.article-inner h4,
+.article-inner h5,
+.article-inner h6 {
+    font-size: 16px;
+    line-height: 1.3125;
+    margin-top: 3.5em;
+    margin-bottom: 1.75em
+}
+
+.article-inner h4 {
+    letter-spacing: .140625em;
+    /* text-transform: uppercase */
+}
+
+.article-inner h6 {
+    font-style: italic
+}
+
+.article-inner h1,
+.article-inner h2,
+.article-inner h3,
+.article-inner h4,
+.article-inner h5,
+.article-inner h6 {
+    font-weight: 900
+}
+
+.article-inner h1:first-child,
+.article-inner h2:first-child,
+.article-inner h3:first-child,
+.article-inner h4:first-child,
+.article-inner h5:first-child,
+.article-inner h6:first-child {
+    margin-top: 0
+}
+
+.article-inner h1:first-child {
+    margin-bottom: 10px;
+    display: inline
+}
+
+.article-entry {
+    line-height: 1.8em;
+    padding-right: 8%;
+    padding-left: 8%
+}
+
+.article-entry p {
+    margin-top: 10px
+}
+
+.article-entry li code,
+.article-entry p code {
+    padding: 1px 3px;
+    margin: 0 3px;
+    background: #ddd;
+    border: 1px solid #ccc;
+    font-family: Menlo, Monaco, Andale Mono, lucida console, Courier New, monospace;
+    word-wrap: break-word;
+    font-size: 14px
+}
+
+.article-entry blockquote {
+    background: #ddd;
+    border-left: 5px solid #ccc;
+    padding: 15px 20px;
+    margin-top: 10px;
+    border-left: 5px solid #657b83;
+    background: #f6f6f6
+}
+
+.article-entry blockquote p {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+.article-entry em {
+    font-style: italic
+}
+
+.article-entry ul li:before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border: 1px solid #999;
+    border-radius: 10px;
+    background: #aaa;
+    display: inline-block;
+    margin-right: 10px;
+    float: left;
+    margin-top: 10px
+}
+
+.article-entry ol {
+    counter-reset: item
+}
+
+.article-entry ol li:before {
+    counter-increment: item;
+    content: counter(item) ".";
+    margin-right: 10px
+}
+
+.article-entry ol,
+.article-entry ul {
+    /* font-size: 14px; */
+    margin: 10px 0;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.article-entry li ol,
+.article-entry li ul {
+    margin-left: 30px
+}
+
+.article-entry li ol li:before,
+.article-entry li ul li:before {
+    content: "";
+    background: #dedede
+}
+
+.article-entry h1 {
+    margin-top: 30px
+}
+
+.article-entry h2,
+.article-entry h3,
+.article-entry h4,
+.article-entry h5,
+.article-entry h6 {
+    margin-top: 20px;
+    font-weight: 700;
+    color: #574c4c;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd
+}
+
+.article-entry video {
+    max-width: 100%
+}
+
+.article-entry strong {
+    font-weight: 700
+}
+
+.article-entry .caption {
+    display: block;
+    font-size: .8em;
+    color: #aaa
+}
+
+.article-entry hr {
+    height: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #fff
+}
+
+.article-entry pre {
+    line-height: 1.5;
+    margin-top: 10px;
+    /* padding: 5px 15px; */
+    overflow-x: auto;
+    color: #657b83;
+    border: 1px solid #ccc;
+    /* text-shadow: 0 1px #444; */
+    font-family: Menlo, Monaco, Andale Mono, lucida console, Courier New, monospace
+}
+
+.article-entry pre code {
+    font-size: 14px
+}
+
+.article-entry table {
+    width: 100%;
+    border: 1px solid #dedede;
+    margin: 15px 0;
+    border-collapse: collapse
+}
+
+.article-entry table td,
+.article-entry table tr {
+    height: 35px
+}
+
+.article-entry table thead tr {
+    background: #f8f8f8
+}
+
+.article-entry table tbody tr:hover {
+    background: #efefef
+}
+
+.article-entry table td,
+.article-entry table th {
+    border: 1px solid #dedede;
+    padding: 0 10px
+}
+
+.article-entry figure table {
+    border: none;
+    width: auto;
+    margin: 0
+}
+
+.article-entry figure table tbody tr:hover {
+    background: none
+}

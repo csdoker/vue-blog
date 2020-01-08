@@ -30,12 +30,14 @@
 
 ### 页面使用overflow: scroll后，在IOS上滑动出现卡顿
 在使用overflow的元素上，加上：`-webkit-overflow-scrolling: touch;`
+
 原理：*[解决页面使用overflow:scroll在ios上滑动卡顿的问题](http://www.jianshu.com/p/1f4693d0ad2d)*
 
 ### ios端的按钮和输入框自带圆角的问题
 两个css样式搞定：
-`-webkit-appearance: none;` /*解决ios上按钮的圆角问题*/
-`border-radius: 0;` /*解决ios上输入框圆角问题*/
+
+- `-webkit-appearance: none;` *解决ios上按钮的圆角问题*
+- `border-radius: 0;` *解决ios上输入框圆角问题*
 
 *To be continued...*
 
@@ -56,8 +58,9 @@ if(/Android [4-6]/.test(navigator.appVersion)) {
 }
 ```
 这是微信UI框架weui中给出的解决方法，其他的算法思路还有很多，这里只贴上一些相关资料的链接，具体不再细讲。
-*[移动web页面，input获取焦点弹出系统虚拟键盘时，挡住input，求解决方案？](https://www.zhihu.com/question/32746176)*
-*[移动端iOS第三方输入法遮挡底部input及android键盘回落后留白问题](https://segmentfault.com/a/1190000006243816)*
+
+- *[移动web页面，input获取焦点弹出系统虚拟键盘时，挡住input，求解决方案？](https://www.zhihu.com/question/32746176)*
+- *[移动端iOS第三方输入法遮挡底部input及android键盘回落后留白问题](https://segmentfault.com/a/1190000006243816)*
 
 > 2017-7-16 更新
 
@@ -83,9 +86,10 @@ $(function() {
 
 除了常见的scrollTop、scrollHeight外，有关浏览器滚动的js和jQuery属性方法还有很多，比如offsetTop、offsetHeight、clientTop、clientHeight等，关于这些值的用法也是个深坑，并且新手非常容易搞混它们的各自的含义，这里不再细讲，以后遇到相关的案例再作探讨。
 相关资料：
-*[javascript中top、clientTop、scrollTop、offsetTop的讲解](http://www.cnblogs.com/trlanfeng/archive/2012/11/04/2753280.html)*
-*[jQuery的height()和JavaScript的height总结，js获取屏幕高度](http://www.cnblogs.com/wyaocn/p/5819774.html)*
-*[clientHeight，scrollHeight，offsetHeight之间的区别及解决方案](http://www.cnblogs.com/nanshanlaoyao/p/5964730.html)*
+
+- *[javascript中top、clientTop、scrollTop、offsetTop的讲解](http://www.cnblogs.com/trlanfeng/archive/2012/11/04/2753280.html)*
+- *[jQuery的height()和JavaScript的height总结，js获取屏幕高度](http://www.cnblogs.com/wyaocn/p/5819774.html)*
+- *[clientHeight，scrollHeight，offsetHeight之间的区别及解决方案](http://www.cnblogs.com/nanshanlaoyao/p/5964730.html)*
 
 ### 页面加载时控制滚动条位置默认在底部
 同样是scrollTop()及scrollHeight的用法，只是项目中因为聊天页面的footer吸底后影响了content这个div的高度，所以需要额外加上footer的高度。再有就是需要注意jQuery对象与js对象的区别，比如这里获取到的content就是一个jQuery对象，必须取第一个数组元素后才能获取到它的scrollHeight。

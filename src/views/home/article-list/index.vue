@@ -21,7 +21,7 @@
             </div>
           </div>
         </header>
-        <div class="article-entry">
+        <div class="article-entry" v-highlight>
           <component :is="getSummary(article.id)"></component>
         </div>
         <div class="article-info">

@@ -12,7 +12,7 @@
           </div>
         </header>
         <div class="article-entry">
-          <div class="article-data">
+          <div class="article-data" v-highlight>
             <router-view />
             <!-- markdown渲染数据 -->
             <!-- <vue-markdown v-if="articleData.articleContent" :source="articleData.articleContent"></vue-markdown> -->
