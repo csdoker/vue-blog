@@ -21,7 +21,7 @@
             </div>
           </div>
         </header>
-        <div class="article-entry" v-highlight>
+        <div class="article-entry">
           <component :is="getSummary(article.id)"></component>
         </div>
         <div class="article-info">
@@ -45,6 +45,7 @@
 
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
+import { highlightCode } from '@/utils/highlight.js'
 
 const components = {}
 BLOGENTRIES.forEach(article => {
@@ -78,6 +79,12 @@ export default {
     getSummary (id) {
       return `article-summary-${id}`
     }
+  },
+  mounted () {
+    highlightCode()
+  },
+  updated () {
+    highlightCode()
   },
   created () {
     // 走摘要里拿列表显示的数据

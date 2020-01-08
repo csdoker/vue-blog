@@ -12,7 +12,7 @@
           </div>
         </header>
         <div class="article-entry">
-          <div class="article-data" v-highlight>
+          <div class="article-data">
             <router-view />
             <!-- markdown渲染数据 -->
             <!-- <vue-markdown v-if="articleData.articleContent" :source="articleData.articleContent"></vue-markdown> -->
@@ -63,6 +63,7 @@
 
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
+import { highlightCode } from '@/utils/highlight.js'
 
 export default {
   name: 'Article',
@@ -81,6 +82,12 @@ export default {
     previousArticle () {
       return this.articleData.id === 1 ? {} : this.articles.filter(article => article.id === this.articleData.id - 1)[0]
     }
+  },
+  mounted () {
+    highlightCode()
+  },
+  updated () {
+    highlightCode()
   },
   created () {
     this.articleData = this.articles.filter(article => article.name === this.$route.name)[0]
