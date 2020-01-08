@@ -4,7 +4,7 @@
       <div class="article-inner">
         <header class="article-header">
           <div class="article-header-inner">
-            <h1 class="article-title">{{articleData.title}}</h1>
+            <h1 class="article-title">{{articleData.name}}</h1>
             <div class="article-date">
               <i class="date-icon iconfont icon-calendar"></i>
               <span class="date-time">{{articleData.date}}</span>
@@ -24,11 +24,11 @@
             <i class="tag-icon iconfont icon-tag-fill"></i>
             <div
               class="tag-item"
-              v-for="(articleTag, index) in articleData.tags"
+              v-for="(tag, index) in articleData.tags"
               :key="index"
             >
               {{
-                articleTag.name
+                tag
               }}
             </div>
           </div>
@@ -38,38 +38,52 @@
         </div>
       </div>
     </article>
-    <nav class="article-nav">
-      <a href="javascript:;" class="nav-link">
+    <nav class="article-nav" :class="[!previousArticle.name ? 'start' : '', !nextArticle.name ? 'end' : '']">
+      <router-link
+        tag="a"
+        :to="{ name: nextArticle.name }"
+        class="nav-link"
+        v-show="nextArticle.name"
+      >
         <i class="link-icon iconfont icon-arrowleft"></i>
-        <span class="link-name">测试1</span>
-      </a>
-      <a href="javascript:;" class="nav-link">
-        <span class="link-name">测试2</span>
+        <span class="link-name">{{ nextArticle.name }}</span>
+      </router-link>
+      <router-link
+        tag="a"
+        :to="{ name: previousArticle.name }"
+        class="nav-link"
+        v-show="previousArticle.name"
+      >
+        <span class="link-name">{{ previousArticle.name }}</span>
         <i class="link-icon iconfont icon-arrowright"></i>
-      </a>
+      </router-link>
     </nav>
   </div>
 </template>
 
 <script>
+import BLOGENTRIES from '@/data/blogs.json'
+
 export default {
   name: 'Article',
   data () {
     return {
-      articleData: {
-        id: 1,
-        title: '文章标题',
-        date: '2020-01-04',
-        tags: [
-          {
-            name: 'tag1'
-          },
-          {
-            name: 'tag2'
-          }
-        ]
-      }
+      articleData: {}
     }
+  },
+  computed: {
+    articles () {
+      return BLOGENTRIES
+    },
+    nextArticle () {
+      return this.articleData.id === this.articles.length ? {} : this.articles.filter(article => article.id === this.articleData.id + 1)[0]
+    },
+    previousArticle () {
+      return this.articleData.id === 1 ? {} : this.articles.filter(article => article.id === this.articleData.id - 1)[0]
+    }
+  },
+  created () {
+    this.articleData = this.articles.filter(article => article.name === this.$route.name)[0]
   }
 }
 </script>
@@ -217,6 +231,12 @@ export default {
           color: #4d4d4d;
         }
       }
+    }
+    &.start {
+      justify-content: flex-start;
+    }
+    &.end {
+      justify-content: flex-end;
     }
   }
 }
