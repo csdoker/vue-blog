@@ -5,18 +5,18 @@ import 'highlight.js/styles/atom-one-dark.css'
 
 // 只加载常用语法
 import javascript from 'highlight.js/lib/languages/javascript'
-import typescript from 'highlight.js/lib/languages/typescript'
+// import typescript from 'highlight.js/lib/languages/typescript'
 import xml from 'highlight.js/lib/languages/xml'
 import css from 'highlight.js/lib/languages/css'
-import scss from 'highlight.js/lib/languages/scss'
-import markdown from 'highlight.js/lib/languages/markdown'
+// import scss from 'highlight.js/lib/languages/scss'
+// import markdown from 'highlight.js/lib/languages/markdown'
 
 hljs.registerLanguage('javascript', javascript)
-hljs.registerLanguage('typescript', typescript)
+// hljs.registerLanguage('typescript', typescript)
 hljs.registerLanguage('xml', xml)
 hljs.registerLanguage('css', css)
-hljs.registerLanguage('scss', scss)
-hljs.registerLanguage('markdown', markdown)
+// hljs.registerLanguage('scss', scss)
+// hljs.registerLanguage('markdown', markdown)
 
 // const Highlight = {}
 // Highlight.install = function (Vue, options) {
