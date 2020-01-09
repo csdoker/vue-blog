@@ -78,7 +78,8 @@ export default {
     getSummaries () {
       const summaries = {}
       this.articles.forEach(article => {
-        summaries[article.id] = require(`@/summary/${article.name}.md`).default
+        // summaries[article.id] = require(`@/summary/${article.name}.md`).default
+        summaries[article.id] = () => import(`@/summary/${article.name}.md`)
       })
       return summaries
     }
