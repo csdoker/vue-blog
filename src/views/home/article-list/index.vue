@@ -22,7 +22,8 @@
           </div>
         </header>
         <div class="article-entry">
-          <component :is="getSummary(article.id)"></component>
+          <!-- <component :is="getSummary(article.id)"></component> -->
+          <component :is="getSummaries[article.id]"></component>
         </div>
         <div class="article-info">
           <div class="article-tag">
@@ -47,14 +48,14 @@
 import BLOGENTRIES from '@/data/blogs.json'
 import { highlightCode } from '@/utils/highlight.js'
 
-const components = {}
-BLOGENTRIES.forEach(article => {
-  components[`ArticleSummary${article.id}`] = () => import(`@/summary/${article.name}.md`)
-})
+// const components = {}
+// BLOGENTRIES.forEach(article => {
+//   components[`ArticleSummary${article.id}`] = () => import(`@/summary/${article.name}.md`)
+// })
 
 export default {
   name: 'ArticleList',
-  components,
+  // components,
   data () {
     return {}
   },
@@ -73,12 +74,19 @@ export default {
       const start = (this.currentPage - 1) * this.maxCount
       const end = start + this.maxCount
       return BLOGENTRIES.sort((a, b) => b.id - a.id).slice(start, end)
+    },
+    getSummaries () {
+      const summaries = {}
+      this.articles.forEach(article => {
+        summaries[article.id] = require(`@/summary/${article.name}.md`).default
+      })
+      return summaries
     }
   },
   methods: {
-    getSummary (id) {
-      return `article-summary-${id}`
-    }
+    // getSummary (id) {
+    //   return `article-summary-${id}`
+    // }
   },
   mounted () {
     highlightCode()
