@@ -166,5 +166,11 @@
         "name": "手把手教你用原生JavaScript造轮子（二）——轮播图",
         "date": "2018-08-10",
         "tags": ["Javascript", "Vue", "轮子", "分页", "Webpack", "ES6"]
+    },
+    {
+        "id": 29,
+        "name": "如何使用GitHub Pages预览HTML",
+        "date": "2020-01-09",
+        "tags": ["Github", "HTML"]
     }
 ]
