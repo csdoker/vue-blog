@@ -29,17 +29,17 @@ export default {
       let result = []
       for (let i = 0; i < chunkResult.length; i++) {
         // 抽离
-        let _datas = this.sortArr(chunkResult[i], 'date')
+        let datas = this.sortArr(chunkResult[i], 'date')
         // 根据所给数据结构进行赋值
         result.push([])
-        for (let o = 0; o < _datas.length; o++) {
+        for (let j = 0; j < datas.length; j++) {
           result[i].push({
-            date: new Date(_datas[o][0].date).getFullYear(),
+            date: new Date(datas[j][0].date).getFullYear(),
             articles: []
           })
         }
-        for (let p = 0; p < result[i].length; p++) {
-          result[i][p].articles = this.sortArr(chunkResult[i], 'date')[p]
+        for (let k = 0; k < result[i].length; k++) {
+          result[i][k].articles = this.sortArr(chunkResult[i], 'date')[k]
         }
       }
       return result
