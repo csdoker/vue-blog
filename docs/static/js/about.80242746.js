@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{"613f":function(t,n,e){"use strict";e.r(n);var a=function(){var t=this,n=t.$createElement,e=t._self._c||n;return e("div",{staticClass:"about-container"})},u=[],o={name:"About"},s=o,c=e("2877"),l=Object(c["a"])(s,a,u,!1,null,null,null);n["default"]=l.exports}}]);
