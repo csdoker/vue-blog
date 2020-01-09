@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -42,7 +43,14 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    plugins: [
+      new CompressionPlugin({
+        test: /\.js$|\.html$|\.css/,
+        threshold: 10240,
+        deleteOriginalAssets: false
+      })
+    ]
   },
   chainWebpack: config => {
     config.module.rule('md')
@@ -58,5 +66,16 @@ module.exports = {
         breaks: true,
         preventExtract: true
       })
+    // if (process.env.NODE_ENV === 'production') {
+    //   return {
+    //     plugins: [
+    //       new CompressionPlugin({
+    //         test: /\.js$|\.html$|\.css/,
+    //         threshold: 10240,
+    //         deleteOriginalAssets: false
+    //       })
+    //     ]
+    //   }
+    // }
   }
 }
