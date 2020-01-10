@@ -10,7 +10,7 @@
           <div class="article-header-inner">
             <router-link
               tag="h1"
-              :to="{ name: article.name }"
+              :to="{ name: 'Article', params: { name: article.name } }"
               class="article-title"
             >
               {{ article.name }}
@@ -23,7 +23,8 @@
         </header>
         <div class="article-entry">
           <!-- <component :is="getSummary(article.id)"></component> -->
-          <component :is="getSummaries[article.id]"></component>
+          <!-- <component :is="getSummaries[article.id]"></component> -->
+          <component :is="article.summary"></component>
         </div>
         <div class="article-info">
           <div class="article-tag">
@@ -73,16 +74,20 @@ export default {
     articles () {
       const start = (this.currentPage - 1) * this.maxCount
       const end = start + this.maxCount
-      return BLOGENTRIES.sort((a, b) => b.id - a.id).slice(start, end)
-    },
-    getSummaries () {
-      const summaries = {}
-      this.articles.forEach(article => {
-        // summaries[article.id] = require(`@/summary/${article.name}.md`).default
-        summaries[article.id] = () => import(`@/summary/${article.name}.md`)
+      const articles = BLOGENTRIES.sort((a, b) => b.id - a.id).slice(start, end)
+      articles.forEach(article => {
+        article.summary = () => import(`@/summary/${article.name}.md`)
       })
-      return summaries
+      return articles
     }
+    // getSummaries () {
+    //   const summaries = {}
+    //   this.articles.forEach(article => {
+    //     // summaries[article.id] = require(`@/summary/${article.name}.md`).default
+    //     summaries[article.id] = () => import(`@/summary/${article.name}.md`)
+    //   })
+    //   return summaries
+    // }
   },
   methods: {
     // getSummary (id) {

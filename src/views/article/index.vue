@@ -13,7 +13,8 @@
         </header>
         <div class="article-entry">
           <div class="article-data">
-            <router-view />
+            <!-- <router-view /> -->
+            <component :is="articleData.content"></component>
             <!-- markdown渲染数据 -->
             <!-- <vue-markdown v-if="articleData.articleContent" :source="articleData.articleContent"></vue-markdown> -->
           </div>
@@ -41,18 +42,18 @@
     <nav class="article-nav" :class="[!previousArticle.name ? 'start' : '', !nextArticle.name ? 'end' : '']">
       <router-link
         tag="a"
-        :to="{ name: nextArticle.name }"
+        :to="{ name: 'Article', params: { name: nextArticle.name } }"
         class="nav-link"
-        v-show="nextArticle.name"
+        v-if="nextArticle.name"
       >
         <i class="link-icon iconfont icon-arrowleft"></i>
         <span class="link-name">{{ nextArticle.name }}</span>
       </router-link>
       <router-link
         tag="a"
-        :to="{ name: previousArticle.name }"
+        :to="{ name: 'Article', params: { name: previousArticle.name } }"
         class="nav-link"
-        v-show="previousArticle.name"
+        v-if="previousArticle.name"
       >
         <span class="link-name">{{ previousArticle.name }}</span>
         <i class="link-icon iconfont icon-arrowright"></i>
@@ -72,6 +73,12 @@ export default {
       articleData: {}
     }
   },
+  watch: {
+    '$route': {
+      handler: 'getArticle',
+      immediate: true
+    }
+  },
   computed: {
     articles () {
       return BLOGENTRIES
@@ -83,15 +90,21 @@ export default {
       return this.articleData.id === 1 ? {} : this.articles.filter(article => article.id === this.articleData.id - 1)[0]
     }
   },
+  methods: {
+    getArticle () {
+      this.articleData = this.articles.filter(article => article.name === this.$route.params.name)[0]
+      this.articleData.content = () => import(`@/post/${this.articleData.name}.md`)
+    }
+  },
   mounted () {
     highlightCode()
   },
   updated () {
     highlightCode()
-  },
-  created () {
-    this.articleData = this.articles.filter(article => article.name === this.$route.name)[0]
   }
+  // created () {
+  //   this.articleData = this.articles.filter(article => article.name === this.$route.name)[0]
+  // }
 }
 </script>
 

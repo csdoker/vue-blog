@@ -14,13 +14,13 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 Vue.use(Router)
 
-const blogRoutes = BlogEntries.map(article => {
-  return {
-    path: article.name,
-    name: article.name,
-    component: () => import(`@/post/${article.name}.md`)
-  }
-})
+// const blogRoutes = BlogEntries.map(article => {
+//   return {
+//     path: article.name,
+//     name: article.name,
+//     component: () => import(`@/post/${article.name}.md`)
+//   }
+// })
 
 const routes = [
   {
@@ -46,11 +46,11 @@ const routes = [
         meta: { title: '主页' }
       },
       {
-        path: 'article',
+        path: '/article/:name',
         name: 'Article',
         component: () => import('@/views/article/index'),
         meta: { title: '文章' },
-        children: blogRoutes,
+        // children: blogRoutes,
         hidden: true
       },
       {

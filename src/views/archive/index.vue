@@ -43,5 +43,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.archive-container {
+  padding: 30px 30px 80px;
+}
+@media screen and (max-width: 800px) {
+  .archive-container {
+    padding: 10px 0 80px;
+  }
+}
 </style>
