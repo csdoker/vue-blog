@@ -5,7 +5,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 
 import getPageTitle from '@/utils/get-page-title'
-import BlogEntries from '@/data/blogs.json'
+// import BlogEntries from '@/data/blogs.json'
 
 /* Layout */
 import Layout from '@/layout'

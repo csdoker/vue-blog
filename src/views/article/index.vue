@@ -65,6 +65,7 @@
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
 import { highlightCode } from '@/utils/highlight.js'
+// import { getArticle } from '@/api/article'
 
 export default {
   name: 'Article',
@@ -75,7 +76,7 @@ export default {
   },
   watch: {
     '$route': {
-      handler: 'getArticle',
+      handler: 'getData',
       immediate: true
     }
   },
@@ -91,9 +92,12 @@ export default {
     }
   },
   methods: {
-    getArticle () {
+    getData () {
       this.articleData = this.articles.filter(article => article.name === this.$route.params.name)[0]
       this.articleData.content = () => import(`@/post/${this.articleData.name}.md`)
+      // getArticle(this.articleData.name).then(response => {
+      //   console.log(response.data)
+      // })
     }
   },
   mounted () {
