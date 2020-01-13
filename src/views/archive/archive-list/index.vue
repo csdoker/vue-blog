@@ -1,7 +1,7 @@
 <template>
   <div class="archive-list">
     <section class="archive-wrapper" v-for="archive in archives" :key="archive.date">
-      <a href="javascript:;" class="archive-date">{{ archive.date }}</a>
+      <div class="archive-date">{{ archive.date }}</div>
       <div class="archive-articles">
         <article class="archive-article" v-for="article in archive.articles" :key="article.id">
           <div class="archive-article-inner">
@@ -28,15 +28,19 @@
 </template>
 
 <script>
-import BLOGENTRIES from '@/data/blogs.json'
-// import _ from 'lodash'
+// import BLOGENTRIES from '@/data/blogs.json'
 
 export default {
   name: 'ArchiveList',
+  data () {
+    return {}
+  },
   props: {
-    currentPage: {
-      type: Number,
-      default: 1
+    articles: {
+      type: Array,
+      default: () => {
+        return []
+      }
     },
     maxCount: {
       type: Number,
@@ -44,27 +48,7 @@ export default {
     }
   },
   computed: {
-    articles () {
-      const start = (this.currentPage - 1) * this.maxCount
-      const end = start + this.maxCount
-      return BLOGENTRIES.sort((a, b) => b.id - a.id).slice(start, end)
-    },
     archives () {
-      const archives = this.getArchives()
-      archives.forEach(archive => {
-        archive.articles.forEach(article => {
-          article.tags = article.tags.map(tag => ({
-            name: tag,
-            color: Math.round(1 + Math.random() * 4)
-          }))
-          console.log(article.tags)
-        })
-      })
-      return archives
-    }
-  },
-  methods: {
-    getArchives () {
       let chunkResult = this.chunkArr(this.articles, this.maxCount)
       let result = []
       for (let i = 0; i < chunkResult.length; i++) {
@@ -83,7 +67,9 @@ export default {
         }
       }
       return result[0]
-    },
+    }
+  },
+  methods: {
     chunkArr (array, size) {
       // 获取数组的长度，如果你传入的不是数组，那么获取到的就是undefined
       const length = array.length
@@ -131,9 +117,6 @@ export default {
       result.push(entry)
       return result
     }
-  },
-  created () {
-    // console.log(this.archives)
   }
 }
 </script>
@@ -344,6 +327,8 @@ export default {
 
       .archive-date {
         position: relative;
+        padding-top: 0;
+        text-align: left;
       }
 
       .archive-articles .archive-article {

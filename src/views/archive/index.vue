@@ -1,6 +1,6 @@
 <template>
   <div class="archive-container">
-    <archive-list :currentPage="currentPage" :maxCount="maxCount" />
+    <archive-list :articles="articles" :maxCount="maxCount" />
     <pager :hide-if-one-page="false" :total-page="pageCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
 </template>
@@ -9,6 +9,7 @@
 import ArchiveList from './archive-list'
 import Pager from '@/components/Pager'
 import BLOGENTRIES from '@/data/blogs.json'
+import _ from 'lodash'
 
 export default {
   name: 'Archive',
@@ -20,7 +21,9 @@ export default {
     return {
       currentPage: 1,
       maxCount: 10,
-      totalCount: BLOGENTRIES.length
+      totalCount: BLOGENTRIES.length,
+      blogEntries: [],
+      articles: []
     }
   },
   computed: {
@@ -37,7 +40,24 @@ export default {
   methods: {
     updatePage (page) {
       this.currentPage = page
+      this.getArticles()
+    },
+    getArticles () {
+      const start = (this.currentPage - 1) * this.maxCount
+      const end = start + this.maxCount
+      this.articles = this.blogEntries.slice(start, end)
     }
+  },
+  created () {
+    this.blogEntries = _.cloneDeep(BLOGENTRIES)
+    this.blogEntries.forEach(article => {
+      article.tags = article.tags.map(tag => ({
+        name: tag,
+        color: Math.round(1 + Math.random() * 4)
+      }))
+    })
+    this.blogEntries.sort((a, b) => b.id - a.id)
+    this.getArticles()
   }
 }
 </script>
