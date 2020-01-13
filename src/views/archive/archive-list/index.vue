@@ -29,6 +29,7 @@
 
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
+// import _ from 'lodash'
 
 export default {
   name: 'ArchiveList',
