@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-container">
     <div class="nav-overlay"></div>
-    <div class="open-button">
+    <div class="open-button" @click.stop="openToolbar">
       <i class="icon iconfont icon-menu"></i>
     </div>
     <header class="navbar-wrapper">
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'Navbar',
   computed: {
@@ -49,7 +51,10 @@ export default {
   methods: {
     getRoute () {
       return this.routes.filter(item => !item.hidden)[0].children.filter(item => !item.hidden)
-    }
+    },
+    ...mapMutations({
+      openToolbar: 'OPEN_TOOLBAR'
+    })
   }
 }
 </script>

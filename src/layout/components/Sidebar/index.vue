@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-container">
+  <div class="sidebar-container" :class="{show: toolbar.opened}">
     <div class="sidebar-overlay"></div>
     <div class="sidebar-wrapper">
       <header class="sidebar-inner">
@@ -20,8 +20,8 @@
           </ul>
         </nav>
         <nav class="smart-menu">
-          <a class="smart-menu-link" href="javascript:;">搜索</a>
-          <a class="smart-menu-link" href="javascript:;">友链</a>
+          <a class="smart-menu-link" @click.stop="handleClickMenu(0)" href="javascript:;">搜索</a>
+          <a class="smart-menu-link" @click.stop="handleClickMenu(1)" href="javascript:;">友链</a>
         </nav>
         <nav class="social">
           <a class="social-link" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=758371536&site=qq&menu=yes" title="qq">
@@ -40,17 +40,30 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
   name: 'Sidebar',
   computed: {
     routes () {
       return this.$router.options.routes
-    }
+    },
+    ...mapState({
+      toolbar: state => state.app.toolbar
+    })
   },
   methods: {
     getRoute () {
       return this.routes.filter(item => !item.hidden)[0].children.filter(item => !item.hidden)
-    }
+    },
+    handleClickMenu (index) {
+      this.openToolbar()
+      this.toggleTabs(index)
+    },
+    ...mapMutations({
+      openToolbar: 'OPEN_TOOLBAR',
+      toggleTabs: 'TOGGLE_TABS'
+    })
   }
 }
 </script>

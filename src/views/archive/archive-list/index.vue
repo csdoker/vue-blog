@@ -1,5 +1,5 @@
 <template>
-  <div class="archive-list">
+  <div class="archive-list" :class="{show: toolbar.opened}">
     <section class="archive-wrapper" v-for="archive in archives" :key="archive.date">
       <div class="archive-date">{{ archive.date }}</div>
       <div class="archive-articles">
@@ -29,6 +29,7 @@
 
 <script>
 // import BLOGENTRIES from '@/data/blogs.json'
+import { mapState } from 'vuex'
 
 export default {
   name: 'ArchiveList',
@@ -67,7 +68,10 @@ export default {
         }
       }
       return result[0]
-    }
+    },
+    ...mapState({
+      toolbar: state => state.app.toolbar
+    })
   },
   methods: {
     chunkArr (array, size) {

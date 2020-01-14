@@ -4,6 +4,7 @@
       v-for="article in articles"
       :key="article.id"
       class="article-item"
+      :class="{show: toolbar.opened}"
     >
       <div class="article-inner">
         <header class="article-header">
@@ -32,6 +33,7 @@
             <div
               class="tag-item"
               v-for="(tag, index) in article.tags"
+              @click.stop="handleClickTag(tag)"
               :key="index"
             >
               {{
@@ -48,6 +50,7 @@
 <script>
 // import BLOGENTRIES from '@/data/blogs.json'
 import { highlightCode } from '@/utils/highlight.js'
+import { mapState, mapMutations } from 'vuex'
 
 // const components = {}
 // BLOGENTRIES.forEach(article => {
@@ -73,6 +76,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      toolbar: state => state.app.toolbar
+    })
     // getSummaries () {
     //   const summaries = {}
     //   this.articles.forEach(article => {
@@ -86,6 +92,14 @@ export default {
     // getSummary (id) {
     //   return `article-summary-${id}`
     // }
+    handleClickTag (name) {
+      this.openToolbar()
+      this.setKeyword(name)
+    },
+    ...mapMutations({
+      openToolbar: 'OPEN_TOOLBAR',
+      setKeyword: 'SET_KEYWORD'
+    })
   },
   mounted () {
     highlightCode()

@@ -1,6 +1,6 @@
 <template>
   <div class="article-container">
-    <article class="article-content">
+    <article class="article-content" :class="{show: toolbar.opened}">
       <div class="article-inner">
         <header class="article-header">
           <div class="article-header-inner">
@@ -27,6 +27,7 @@
               class="tag-item"
               v-for="(tag, index) in articleData.tags"
               :key="index"
+              @click.stop="handleClickTag(tag)"
             >
               {{
                 tag
@@ -66,6 +67,7 @@
 import BLOGENTRIES from '@/data/blogs.json'
 import { highlightCode } from '@/utils/highlight.js'
 // import { getArticle } from '@/api/article'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Article',
@@ -89,7 +91,10 @@ export default {
     },
     previousArticle () {
       return this.articleData.id === 1 ? {} : this.articles.filter(article => article.id === this.articleData.id - 1)[0]
-    }
+    },
+    ...mapState({
+      toolbar: state => state.app.toolbar
+    })
   },
   methods: {
     getData () {
@@ -98,7 +103,15 @@ export default {
       // getArticle(this.articleData.name).then(response => {
       //   console.log(response.data)
       // })
-    }
+    },
+    handleClickTag (name) {
+      this.openToolbar()
+      this.setKeyword(name)
+    },
+    ...mapMutations({
+      openToolbar: 'OPEN_TOOLBAR',
+      setKeyword: 'SET_KEYWORD'
+    })
   },
   mounted () {
     highlightCode()
