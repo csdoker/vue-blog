@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <article-list :currentPage="currentPage" :maxCount="maxCount" />
+    <article-list :articles="articles" :maxCount="maxCount" />
     <pager :hide-if-one-page="false" :total-page="pageCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
 </template>
@@ -9,6 +9,7 @@
 import ArticleList from './article-list'
 import Pager from '@/components/Pager'
 import BLOGENTRIES from '@/data/blogs.json'
+import _ from 'lodash'
 
 export default {
   name: 'Home',
@@ -20,7 +21,9 @@ export default {
     return {
       currentPage: 1,
       maxCount: 5,
-      totalCount: BLOGENTRIES.length
+      totalCount: BLOGENTRIES.length,
+      articles: [],
+      blogEntries: []
     }
   },
   // watch: {
@@ -41,8 +44,17 @@ export default {
     }
   },
   methods: {
+    getArticles () {
+      const start = (this.currentPage - 1) * this.maxCount
+      const end = start + this.maxCount
+      this.articles = this.blogEntries.slice(start, end)
+      this.articles.forEach(article => {
+        article.summary = () => import(`@/summary/${article.name}.md`)
+      })
+    },
     updatePage (page) {
       this.currentPage = page
+      this.getArticles()
       // this.$router.push({ path: `/home/page/${page}` })
     }
     // setCurrentPage () {
@@ -56,6 +68,11 @@ export default {
     //     }
     //   }
     // }
+  },
+  created () {
+    this.blogEntries = _.cloneDeep(BLOGENTRIES)
+    this.blogEntries.sort((a, b) => b.id - a.id)
+    this.getArticles()
   }
 }
 </script>

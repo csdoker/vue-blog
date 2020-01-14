@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import BLOGENTRIES from '@/data/blogs.json'
+// import BLOGENTRIES from '@/data/blogs.json'
 import { highlightCode } from '@/utils/highlight.js'
 
 // const components = {}
@@ -61,9 +61,11 @@ export default {
     return {}
   },
   props: {
-    currentPage: {
-      type: Number,
-      default: 1
+    articles: {
+      type: Array,
+      default: () => {
+        return []
+      }
     },
     maxCount: {
       type: Number,
@@ -71,15 +73,6 @@ export default {
     }
   },
   computed: {
-    articles () {
-      const start = (this.currentPage - 1) * this.maxCount
-      const end = start + this.maxCount
-      const articles = BLOGENTRIES.sort((a, b) => b.id - a.id).slice(start, end)
-      articles.forEach(article => {
-        article.summary = () => import(`@/summary/${article.name}.md`)
-      })
-      return articles
-    }
     // getSummaries () {
     //   const summaries = {}
     //   this.articles.forEach(article => {
