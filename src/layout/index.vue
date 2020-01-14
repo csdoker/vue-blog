@@ -2,18 +2,20 @@
   <div class="app-wrapper">
     <navbar />
     <sidebar />
+    <toolbar />
     <app-main />
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, Toolbar, AppMain } from './components'
 
 export default {
   name: 'Layout',
   components: {
     Navbar,
     Sidebar,
+    Toolbar,
     AppMain
   }
 }
