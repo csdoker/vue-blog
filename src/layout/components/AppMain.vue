@@ -1,5 +1,5 @@
 <template>
-  <div class="app-main">
+  <div class="app-main" :class="{show: toolbar.opened}">
     <transition name="fade-transform" mode="out-in">
       <router-view :key="key" />
     </transition>
@@ -7,12 +7,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'AppMain',
   computed: {
     key () {
       return this.$route.path
-    }
+    },
+    ...mapState({
+      toolbar: state => state.app.toolbar
+    })
   }
 }
 </script>
@@ -25,6 +30,9 @@ export default {
   background-color: #eaeaea;
   left: 300px;
   transition: all 0.2s ease-in;
+  &.show {
+    transform: translateX(360px);
+  }
 }
 @media screen and (max-width: 800px) {
   .app-main {
