@@ -63,11 +63,11 @@ export default {
 
     &.show {
       animation: none;
-      display: none;
+      opacity: 0;
     }
     &.hide {
       animation: none;
-      display: block;
+      opacity: 1;
     }
   }
 }

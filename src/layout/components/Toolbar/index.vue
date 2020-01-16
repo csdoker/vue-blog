@@ -1,8 +1,6 @@
 <template>
   <div class="toolbar-container" @click.stop :class="{show: toolbar.opened, hide: !toolbar.opened}">
-    <!-- test -->
-    <div @click="closeToolbar">sss</div>
-    <!-- test -->
+    <!-- TODO 添加关闭图标按钮  @click="closeToolbar" -->
     <div class="toolbar-headar">
       <ul class="headar-menu">
         <li class="menu-item" @click="handleSwitchTab(0)">
@@ -13,12 +11,11 @@
         </li>
       </ul>
     </div>
-    <div class="toolbar-wrap">
+    <div class="toolbar-body">
       <section v-show="toolbar.tabs[0]" class="section-archive">
         <div class="archive-search">
           <input type="text" class="search-input" v-model="keyword" placeholder="find something...">
-          <i class="icon-search search-icon"></i>
-          <!-- <i class="icon-close search-icon" v-show="!isSearchEmpty"></i> -->
+          <i class="search-icon iconfont icon-search"></i>
         </div>
         <div class="archive-tag">
           <div class="tag-toggle">
@@ -35,18 +32,18 @@
         <ul class="archive-list">
           <li class="archive-item" v-for="archive in archives" :key="archive.id">
             <a href="javascript:;" class="item-title">
-              <i class="icon-quo-left title-icon"></i>
+              <i class="title-icon iconfont icon-quote-left"></i>
               <router-link :title="archive.name" class="title-name" :to="{ name: 'Article', params: { name: archive.name } }">
                 {{archive.name}}
               </router-link>
             </a>
             <div class="item-info">
               <!-- <p class="info-time"> -->
-                <i class="icon-calendar time-icon"></i>
+                <i class="time-icon iconfont icon-calendar"></i>
                 <span class="time-date">{{archive.date}}</span>
               <!-- </p> -->
               <!-- <p class="info-tag"> -->
-                <i class="icon-price-tags tag-icon"></i>
+                <i class="tag-icon iconfont icon-tag-fill"></i>
                 <span class="tag-item" @click="handleTagClick(tag)" v-for="(tag, index) in archive.tags" :key="index">
                   #{{ tag }}
                 </span>
@@ -170,7 +167,7 @@ export default {
     display: none;
   }
 
-  .toolbar-wrap {
+  .toolbar-body {
     height: 100%;
     color: #e5e5e5;
     overflow: hidden;
@@ -208,8 +205,8 @@ export default {
         .search-icon {
           position: absolute;
           right: 20px;
-          top: 50%;
-          margin-top: -8px;
+          font-size: 20px;
+          line-height: 30px;
           color: #fff;
           cursor: pointer;
           transition: all 0.2s ease-in;
@@ -585,11 +582,11 @@ export default {
 
     .toolbar-headar {
       display: block;
-      position: fixed;
-      left: 0;
+      // position: fixed;
+      // left: 0;
       width: 100%;
-      z-index: 9999;
-      height: auto;
+      // z-index: 9999;
+      // height: auto;
       margin: 10px 0 20px;
 
       .headar-menu {
@@ -613,7 +610,6 @@ export default {
 
         .menu-item {
           width: 50%;
-          border-color: #fff;
 
           .item-link {
             color: #fff;
@@ -628,21 +624,12 @@ export default {
               color: #eaeaea;
             }
           }
-
-          &:first-child {
-            border-left: 0;
-          }
-
-          &:last-child {
-            border-right: 0;
-          }
         }
       }
     }
 
-    .toolbar-wrap {
-      padding-top: 56px;
-
+    .toolbar-body {
+      height: auto;
       .section-friends .friends-list .friends-item {
         padding: 5px 20px;
       }
@@ -650,11 +637,12 @@ export default {
 
     &.show {
       animation: none;
-      display: block;
+      opacity: 1;
+      overflow-y: auto;
     }
     &.hide {
       animation: none;
-      display: none;
+      opacity: 0;
     }
   }
 }
