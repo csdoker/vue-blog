@@ -94,7 +94,7 @@ export default {
     // }
     handleClickTag (name) {
       this.openToolbar()
-      this.setKeyword(name)
+      this.setKeyword(`#${name}`)
     },
     ...mapMutations({
       openToolbar: 'OPEN_TOOLBAR',

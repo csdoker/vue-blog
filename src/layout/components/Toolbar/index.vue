@@ -1,52 +1,96 @@
 <template>
-  <div class="toolbar-container" @click.stop :class="{show: toolbar.opened, hide: !toolbar.opened}">
-    <!-- TODO 添加关闭图标按钮  @click="closeToolbar" -->
+  <div
+    class="toolbar-container"
+    @click.stop
+    :class="{ show: toolbar.opened, hide: !toolbar.opened }"
+  >
+    <div class="toolbar-close">
+      <i class="close-icon iconfont icon-close-circle" @click="closeToolbar"></i>
+    </div>
     <div class="toolbar-headar">
       <ul class="headar-menu">
         <li class="menu-item" @click="handleSwitchTab(0)">
-          <a href="javascript:;" class="item-link" :class="{active: toolbar.tabs[0]}">搜索</a>
+          <a
+            href="javascript:;"
+            class="item-link"
+            :class="{ active: toolbar.tabs[0] }"
+            >搜索</a
+          >
         </li>
         <li class="menu-item" @click="handleSwitchTab(1)">
-          <a href="javascript:;" class="item-link" :class="{active: toolbar.tabs[1]}">友链</a>
+          <a
+            href="javascript:;"
+            class="item-link"
+            :class="{ active: toolbar.tabs[1] }"
+            >友链</a
+          >
         </li>
       </ul>
     </div>
     <div class="toolbar-body">
       <section v-show="toolbar.tabs[0]" class="section-archive">
         <div class="archive-search">
-          <input type="text" class="search-input" v-model="keyword" placeholder="find something...">
+          <input
+            type="text"
+            class="search-input"
+            v-model="keyword"
+            placeholder="find something..."
+          />
           <i class="search-icon iconfont icon-search"></i>
         </div>
         <div class="archive-tag">
           <div class="tag-toggle">
             <span class="tag-wording">tag:</span>
-            <input @click="toggleTag" type="checkbox" class="tag-checkbox">
+            <input @click="toggleTag" type="checkbox" class="tag-checkbox" />
           </div>
           <ul class="tag-list" v-show="isShowTags">
-            <li class="tag-item" @click="handleTagClick(tag.name)" v-for="(tag, index) in tags" :key="index">
-              <a href="javascript:;" class="tag-link" :class="`color${tag.color}`">{{ tag.name }}</a>
+            <li
+              class="tag-item"
+              @click="handleTagClick(tag.name)"
+              v-for="(tag, index) in tags"
+              :key="index"
+            >
+              <a
+                href="javascript:;"
+                class="tag-link"
+                :class="`color${tag.color}`"
+                >{{ tag.name }}</a
+              >
             </li>
             <div class="clearfix"></div>
           </ul>
         </div>
         <ul class="archive-list">
-          <li class="archive-item" v-for="archive in archives" :key="archive.id">
+          <li
+            class="archive-item"
+            v-for="archive in archives"
+            :key="archive.id"
+          >
             <a href="javascript:;" class="item-title">
               <i class="title-icon iconfont icon-quote-left"></i>
-              <router-link :title="archive.name" class="title-name" :to="{ name: 'Article', params: { name: archive.name } }">
-                {{archive.name}}
-              </router-link>
+              <a
+                :title="archive.name"
+                class="title-name"
+                @click="handleTitleClick(archive.name)"
+              >
+                {{ archive.name }}
+              </a>
             </a>
             <div class="item-info">
               <!-- <p class="info-time"> -->
-                <i class="time-icon iconfont icon-calendar"></i>
-                <span class="time-date">{{archive.date}}</span>
+              <i class="time-icon iconfont icon-calendar"></i>
+              <span class="time-date">{{ archive.date }}</span>
               <!-- </p> -->
               <!-- <p class="info-tag"> -->
-                <i class="tag-icon iconfont icon-tag-fill"></i>
-                <span class="tag-item" @click="handleTagClick(tag)" v-for="(tag, index) in archive.tags" :key="index">
-                  #{{ tag }}
-                </span>
+              <i class="tag-icon iconfont icon-tag-fill"></i>
+              <span
+                class="tag-item"
+                @click="handleTagClick(tag)"
+                v-for="(tag, index) in archive.tags"
+                :key="index"
+              >
+                #{{ tag }}
+              </span>
               <!-- </p> -->
             </div>
           </li>
@@ -56,26 +100,26 @@
         <ul class="friends-list">
           <li class="friends-item">
             <a href="javascript:;" target="_blank" class="friend-link">
-              <i class="icon-quo-left link-icon"></i>
-              测试测试测试
+              <i class="link-icon iconfont icon-quote-left"></i>
+              <span class="link-name">测试测试测试</span>
             </a>
           </li>
           <li class="friends-item">
             <a href="javascript:;" target="_blank" class="friend-link">
-              <i class="icon-quo-left link-icon"></i>
-              测试测试测试
+              <i class="link-icon iconfont icon-quote-left"></i>
+              <span class="link-name">测试测试测试</span>
             </a>
           </li>
           <li class="friends-item">
             <a href="javascript:;" target="_blank" class="friend-link">
-              <i class="icon-quo-left link-icon"></i>
-              测试测试测试
+              <i class="link-icon iconfont icon-quote-left"></i>
+              <span class="link-name">测试测试测试</span>
             </a>
           </li>
           <li class="friends-item">
             <a href="javascript:;" target="_blank" class="friend-link">
-              <i class="icon-quo-left link-icon"></i>
-              测试测试测试
+              <i class="link-icon iconfont icon-quote-left"></i>
+              <span class="link-name">测试测试测试</span>
             </a>
           </li>
         </ul>
@@ -87,6 +131,7 @@
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
+import _ from 'lodash'
 
 export default {
   name: 'Toolbar',
@@ -94,6 +139,7 @@ export default {
     return {
       tags: [],
       archives: [],
+      result: [],
       isShowTags: false
     }
   },
@@ -110,6 +156,26 @@ export default {
       }
     }
   },
+  watch: {
+    keyword (val) {
+      const isTag = val.substr(0, 1) === '#'
+      console.log(this.result.filter(archive => archive.tags.includes(val.substr(1))))
+      let archives = []
+      if (isTag) {
+        console.log(111)
+        archives = [...this.result.filter(archive => archive.tags.includes(val.substr(1)))]
+      } else {
+        this.result.forEach(archive => {
+          archive.tags.forEach(tag => {
+            if (tag.indexOf(val) > -1) {
+              archives.push(archive)
+            }
+          })
+        })
+      }
+      this.archives = _.cloneDeep(archives)
+    }
+  },
   methods: {
     getTags () {
       this.archives.forEach(archive => {
@@ -122,11 +188,12 @@ export default {
         name: tag,
         color: Math.round(1 + Math.random() * 4)
       }))
-      console.log(this.tags)
+      // console.log(this.tags)
     },
     getArchives () {
       this.archives = BLOGENTRIES.sort((a, b) => b.id - a.id)
-      console.log(this.archives)
+      this.result = _.cloneDeep(this.archives)
+      // console.log(this.archives)
     },
     handleSwitchTab (index) {
       this.toggleTabs(index)
@@ -136,6 +203,12 @@ export default {
     },
     handleTagClick (tag) {
       this.setKeyword(`#${tag}`)
+    },
+    handleTitleClick (title) {
+      if (this.$route.params.name !== title) {
+        this.closeToolbar()
+        this.$router.push({ name: 'Article', params: { name: title } })
+      }
     },
     ...mapMutations({
       toggleTabs: 'TOGGLE_TABS',
@@ -161,7 +234,11 @@ export default {
   padding: 0;
   opacity: 0;
   -webkit-overflow-scrolling: touch;
-  transition: all 0.2s ease-in;
+  // transition: all 0.2s ease-in;
+
+  .toolbar-close {
+    display: none;
+  }
 
   .toolbar-headar {
     display: none;
@@ -218,22 +295,21 @@ export default {
 
         .tag-toggle {
           position: relative;
-          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 0 20px;
           margin-bottom: 20px;
 
           .tag-wording {
-            position: absolute;
-            font-size: 14px;
-            right: 72px;
+            font-size: 18px;
             line-height: 24px;
-            top: 0;
+            margin-right: 10px;
           }
 
           .tag-checkbox {
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            margin-top: -8px;
+            position: relative;
+            display: flex;
             z-index: 2;
             border: 0;
             background: 0 0;
@@ -248,9 +324,6 @@ export default {
               background-color: #fdfdfd;
               border-radius: 20px;
               cursor: pointer;
-              display: inline-block;
-              position: relative;
-              vertical-align: middle;
               box-sizing: content-box;
               box-shadow: inset 0 0 0 0 #dfdfdf;
               transition: border 0.4s, box-shadow 0.4s;
@@ -262,7 +335,7 @@ export default {
               width: 14px;
               height: 14px;
               position: absolute;
-              top: 10px;
+              top: 8px;
               left: 0;
               -webkit-transform: translateY(-50%);
               border-radius: 100%;
@@ -289,28 +362,29 @@ export default {
         }
 
         .tag-list {
+          display: flex;
+          flex-wrap: wrap;
           margin: 0 10px;
           padding: 10px;
           background: rgba(255, 255, 255, 0.2);
           transition: all 0.2s ease-in;
 
           .tag-item {
-            float: left;
-
             .tag-link {
-              display: inline-block;
+              display: flex;
+              align-items: center;
               font-weight: 400;
               text-decoration: none;
               font-size: 10px;
               color: #fff;
               height: 18px;
               line-height: 18px;
-              float: left;
               padding: 0 5px 0 10px;
               position: relative;
               border-radius: 0 5px 5px 0;
               margin: 5px 9px 5px 8px;
-              font-family: Menlo, Monaco, Andale Mono, lucida console, Courier New, monospace;
+              font-family: Menlo, Monaco, Andale Mono, lucida console,
+                Courier New, monospace;
 
               &:hover {
                 opacity: 0.8;
@@ -392,36 +466,31 @@ export default {
           border-bottom: 1px dotted #dcdcdc;
 
           .item-title {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            display: block;
+            display: inline-flex;
+            align-items: center;
             color: #fffff8;
             text-shadow: 1px 1px rgba(77, 77, 77, 0.25);
-            font-size: 0;
 
             .title-icon {
-              display: inline-block;
-              vertical-align: middle;
               margin-right: 10px;
               color: #fffdd8;
             }
 
             .title-name {
-              display: inline-block;
-              vertical-align: middle;
               font-size: 16px;
               line-height: 28px;
-              width: calc(100% - 26px);
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+              // width: calc(100% - 26px);
+              // overflow: hidden;
+              // text-overflow: ellipsis;
+              // white-space: nowrap;
               color: #fff;
             }
           }
 
           .item-info {
-            font-size: 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
 
             .info-time {
               display: inline-block;
@@ -431,8 +500,6 @@ export default {
 
             .time-icon {
               color: #fffdd8;
-              display: inline-block;
-              vertical-align: middle;
               font-size: 16px;
               margin-right: 4px;
             }
@@ -441,8 +508,6 @@ export default {
               margin-right: 10px;
               color: #fffdd8;
               line-height: 24px;
-              display: inline-block;
-              vertical-align: middle;
               font-size: 12px;
             }
 
@@ -454,8 +519,6 @@ export default {
 
             .tag-icon {
               color: #fffdd8;
-              display: inline-block;
-              vertical-align: middle;
               font-size: 16px;
               margin-right: 4px;
             }
@@ -463,8 +526,6 @@ export default {
             .tag-item {
               color: #fffdd8;
               line-height: 24px;
-              display: inline-block;
-              vertical-align: middle;
               font-size: 12px;
               margin-right: 6px;
               cursor: pointer;
@@ -482,30 +543,6 @@ export default {
       }
     }
 
-    .section-about {
-      height: 100%;
-      color: #e5e5e5;
-      overflow: hidden;
-      overflow-y: auto;
-
-      .about-wrap {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        color: #fffdd8;
-        text-shadow: 1px 1px rgba(77, 77, 77, 0.45);
-        font-size: 16px;
-      }
-    }
-
     .section-friends {
       height: 100%;
       color: #e5e5e5;
@@ -514,7 +551,7 @@ export default {
       padding-top: 30px;
 
       .friends-list {
-        margin-top: 10px;
+        // margin-top: 10px;
         color: rgba(77, 77, 77, 0.75);
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
@@ -529,10 +566,8 @@ export default {
           }
 
           .friend-link {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            display: block;
+            display: inline-flex;
+            align-items: center;
             color: #fffff8;
             text-shadow: 1px 1px rgba(77, 77, 77, 0.25);
             line-height: 28px;
@@ -542,6 +577,13 @@ export default {
               margin-right: 10px;
               color: #fffdd8;
             }
+
+            // .link-name {
+            //   width: calc(100% - 26px);
+            //   overflow: hidden;
+            //   white-space: nowrap;
+            //   text-overflow: ellipsis;
+            // }
           }
         }
       }
@@ -579,6 +621,17 @@ export default {
   .toolbar-container {
     width: 100%;
     position: absolute;
+
+    .toolbar-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .close-icon {
+        cursor: pointer;
+        color: #fff;
+        font-size: 30px;
+      }
+    }
 
     .toolbar-headar {
       display: block;
