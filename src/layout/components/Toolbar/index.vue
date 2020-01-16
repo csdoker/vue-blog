@@ -1,5 +1,8 @@
 <template>
-  <div class="toolbar-container" :class="{show: toolbar.opened}">
+  <div class="toolbar-container" @click.stop :class="{show: toolbar.opened, hide: !toolbar.opened}">
+    <!-- test -->
+    <div @click="closeToolbar">sss</div>
+    <!-- test -->
     <div class="toolbar-headar">
       <ul class="headar-menu">
         <li class="menu-item" @click="handleSwitchTab(0)">
@@ -139,7 +142,8 @@ export default {
     },
     ...mapMutations({
       toggleTabs: 'TOGGLE_TABS',
-      setKeyword: 'SET_KEYWORD'
+      setKeyword: 'SET_KEYWORD',
+      closeToolbar: 'CLOSE_TOOLBAR'
     })
   },
   created () {
@@ -158,7 +162,7 @@ export default {
   top: 0;
   z-index: 10;
   padding: 0;
-  // opacity: 0;
+  opacity: 0;
   -webkit-overflow-scrolling: touch;
   transition: all 0.2s ease-in;
 
@@ -547,34 +551,37 @@ export default {
     }
   }
 
+  // &.show {
+  //   transform: translateX(300px);
+  //   opacity: 1;
+  //   // left: 300px;
+  // }
+
   &.show {
-    transform: translateX(300px);
+    opacity: 1;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: smallLeftIn;
+    animation-name: smallLeftIn;
   }
 
-  // &.show {
-  //   opacity: 1;
-  //   -webkit-animation-duration: 0.8s;
-  //   animation-duration: 0.8s;
-  //   -webkit-animation-fill-mode: both;
-  //   animation-fill-mode: both;
-  //   -webkit-animation-name: smallLeftIn;
-  //   animation-name: smallLeftIn;
-  // }
-
-  // &.hide {
-  //   z-index: 0;
-  //   -webkit-animation-duration: 0.8s;
-  //   animation-duration: 0.8s;
-  //   -webkit-animation-fill-mode: both;
-  //   animation-fill-mode: both;
-  //   -webkit-animation-name: smallleftOut;
-  //   animation-name: smallleftOut;
-  // }
+  &.hide {
+    z-index: 0;
+    opacity: 0;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: smallleftOut;
+    animation-name: smallleftOut;
+  }
 }
 @media screen and (max-width: 800px) {
   .toolbar-container {
-    left: -300px;
-    width: 300px;
+    width: 100%;
+    position: absolute;
 
     .toolbar-headar {
       display: block;
@@ -639,6 +646,15 @@ export default {
       .section-friends .friends-list .friends-item {
         padding: 5px 20px;
       }
+    }
+
+    &.show {
+      animation: none;
+      display: block;
+    }
+    &.hide {
+      animation: none;
+      display: none;
     }
   }
 }

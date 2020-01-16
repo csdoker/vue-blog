@@ -1,6 +1,6 @@
 <template>
-  <div class="app-wrapper">
-    <navbar />
+  <div class="app-wrapper" @click="closeToolbar" :class="{show: toolbar.opened}">
+    <app-canvas />
     <sidebar />
     <toolbar />
     <app-main />
@@ -8,15 +8,26 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, Toolbar, AppMain } from './components'
+import { AppCanvas, Sidebar, Toolbar, AppMain } from './components'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
-    Navbar,
+    AppCanvas,
     Sidebar,
     Toolbar,
     AppMain
+  },
+  computed: {
+    ...mapState({
+      toolbar: state => state.app.toolbar
+    })
+  },
+  methods: {
+    ...mapMutations({
+      closeToolbar: 'CLOSE_TOOLBAR'
+    })
   }
 }
 </script>
@@ -27,5 +38,16 @@ export default {
     height: 100%;
     width: 100%;
     min-height: 100%;
+    overflow-x: hidden;
+    &.show {
+      background: linear-gradient(200deg, #a0cfe4, #e8c37e);
+    }
+  }
+  @media screen and (max-width: 800px) {
+    .app-wrapper {
+      &.show {
+        overflow-y: hidden;
+      }
+    }
   }
 </style>

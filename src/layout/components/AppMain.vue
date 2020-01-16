@@ -1,5 +1,6 @@
 <template>
-  <div class="app-main" :class="{show: toolbar.opened}">
+  <div class="app-main" :class="{ show: toolbar.opened, hide: !toolbar.opened }">
+    <navbar />
     <transition name="fade-transform" mode="out-in">
       <router-view :key="key" />
     </transition>
@@ -8,9 +9,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import Navbar from './Navbar'
 
 export default {
   name: 'AppMain',
+  components: {
+    Navbar
+  },
   computed: {
     key () {
       return this.$route.path
@@ -27,17 +32,43 @@ export default {
   position: absolute;
   right: 0;
   min-height: 100%;
-  background-color: #eaeaea;
   left: 300px;
-  transition: all 0.2s ease-in;
+  // transition: all 0.2s ease-in;
+  background-color: #eaeaea;
+  // &.show {
+  //   // transform: translateX(360px);
+  //   left: 660px;
+  // }
   &.show {
-    transform: translateX(360px);
+    background: none;
+    opacity: .9;
+    -webkit-animation-duration: .8s;
+    animation-duration: .8s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: leftIn;
+    animation-name: leftIn;
+  }
+  &.hide {
+    -webkit-animation-duration: .8s;
+    animation-duration: .8s;
+    -webkit-animation-name: leftOut;
+    animation-name: leftOut;
   }
 }
 @media screen and (max-width: 800px) {
   .app-main {
     position: relative;
     left: 0;
+
+    &.show {
+      animation: none;
+      display: none;
+    }
+    &.hide {
+      animation: none;
+      display: block;
+    }
   }
 }
 </style>
