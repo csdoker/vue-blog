@@ -1,4 +1,6 @@
 <template>
+  <!-- <transition name="fade" enter-active-class="animated bounceInLeft fast" leave-active-class="animated bounceOutLeft fast">
+  </transition> -->
   <div
     class="toolbar-container"
     @click.stop
@@ -131,7 +133,6 @@
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
-import _ from 'lodash'
 
 export default {
   name: 'Toolbar',
@@ -678,9 +679,13 @@ export default {
     }
 
     &.show {
-      animation: none;
-      opacity: 1;
+      // animation: none;
+      // opacity: 1;
       overflow-y: auto;
+      -webkit-animation-duration: 0.6s;
+      animation-duration: 0.6s;
+      -webkit-animation-name: bounceInLeft;
+      animation-name: bounceInLeft;
     }
     &.hide {
       animation: none;
