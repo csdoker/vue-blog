@@ -679,13 +679,13 @@ export default {
     }
 
     &.show {
-      // animation: none;
-      // opacity: 1;
+      animation: none;
+      opacity: 1;
       overflow-y: auto;
-      -webkit-animation-duration: 0.6s;
-      animation-duration: 0.6s;
-      -webkit-animation-name: bounceInLeft;
-      animation-name: bounceInLeft;
+      // -webkit-animation-duration: 0.6s;
+      // animation-duration: 0.6s;
+      // -webkit-animation-name: bounceInLeft;
+      // animation-name: bounceInLeft;
     }
     &.hide {
       animation: none;
