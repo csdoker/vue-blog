@@ -139,14 +139,10 @@ export default {
     return {
       tags: [],
       archives: [],
-      result: [],
       isShowTags: false
     }
   },
   computed: {
-    ...mapState({
-      toolbar: state => state.app.toolbar
-    }),
     keyword: {
       get () {
         return this.toolbar.keyword
@@ -154,26 +150,22 @@ export default {
       set (newVal) {
         this.setKeyword(newVal)
       }
-    }
+    },
+    articles () {
+      return BLOGENTRIES.sort((a, b) => b.id - a.id)
+    },
+    ...mapState({
+      toolbar: state => state.app.toolbar
+    })
   },
   watch: {
     keyword (val) {
       const isTag = val.substr(0, 1) === '#'
-      console.log(this.result.filter(archive => archive.tags.includes(val.substr(1))))
-      let archives = []
       if (isTag) {
-        console.log(111)
-        archives = [...this.result.filter(archive => archive.tags.includes(val.substr(1)))]
+        this.archives = this.articles.filter(archive => archive.tags.includes(val.substr(1)))
       } else {
-        this.result.forEach(archive => {
-          archive.tags.forEach(tag => {
-            if (tag.indexOf(val) > -1) {
-              archives.push(archive)
-            }
-          })
-        })
+        this.archives = this.articles.filter(archive => archive.name.indexOf(val) > -1)
       }
-      this.archives = _.cloneDeep(archives)
     }
   },
   methods: {
@@ -188,12 +180,9 @@ export default {
         name: tag,
         color: Math.round(1 + Math.random() * 4)
       }))
-      // console.log(this.tags)
     },
     getArchives () {
-      this.archives = BLOGENTRIES.sort((a, b) => b.id - a.id)
-      this.result = _.cloneDeep(this.archives)
-      // console.log(this.archives)
+      this.archives = this.articles
     },
     handleSwitchTab (index) {
       this.toggleTabs(index)
