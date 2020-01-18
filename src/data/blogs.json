@@ -93,7 +93,7 @@
         "id": 16,
         "name": "五子棋AI（二）：绘制界面，添加点击事件，棋局胜负判断",
         "date": "2016-09-13",
-        "tags": ["五子棋", "AI", "算法", "canvas"]
+        "tags": ["五子棋", "AI", "算法", "Canvas"]
     },
     {
         "id": 17,
@@ -111,19 +111,19 @@
         "id": 19,
         "name": "围住神经猫——广度优先搜索的妙用",
         "date": "2017-10-03",
-        "tags": ["JavaScript", "DFS", "BFS", "算法", "Canvas"]
+        "tags": ["JavaScript", "面向对象", "算法", "Canvas"]
     },
     {
         "id": 20,
         "name": "vps折腾记（一）——简介、选购、环境搭建",
         "date": "2017-10-22",
-        "tags": ["vps", "服务器", "Linux"]
+        "tags": ["服务器", "Linux"]
     },
     {
         "id": 21,
         "name": "啃书笔记（一）——《JavaScript-DOM编程艺术》",
         "date": "2017-10-29",
-        "tags": ["JavaScript", "笔记", "DOM"]
+        "tags": ["JavaScript", "笔记"]
     },
     {
         "id": 22,
@@ -159,13 +159,13 @@
         "id": 27,
         "name": "手把手教你用原生JavaScript造轮子（一）——分页器",
         "date": "2018-07-22",
-        "tags": ["JavaScript", "Vue", "轮子", "分页", "Webpack", "ES6"]
+        "tags": ["JavaScript", "Vue", "轮子", "分页", "插件", "组件", "面向对象", "Webpack", "ES6"]
     },
     {
         "id": 28,
         "name": "手把手教你用原生JavaScript造轮子（二）——轮播图",
         "date": "2018-08-10",
-        "tags": ["JavaScript", "Vue", "轮子", "分页", "Webpack", "ES6"]
+        "tags": ["JavaScript", "Vue", "轮子", "轮播", "插件", "组件", "面向对象", "Webpack", "ES6"]
     },
     {
         "id": 29,
@@ -177,6 +177,6 @@
         "id": 30,
         "name": "HTML入门笔记（一）",
         "date": "2020-01-14",
-        "tags": ["HTML"]
+        "tags": ["HTML", "笔记"]
     }
 ]

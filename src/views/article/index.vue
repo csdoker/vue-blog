@@ -66,7 +66,7 @@
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
 import { highlightCode } from '@/utils/highlight.js'
-// import { getArticle } from '@/api/article'
+import { getArticles } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -103,6 +103,9 @@ export default {
       // getArticle(this.articleData.name).then(response => {
       //   console.log(response.data)
       // })
+      getArticles().then(response => {
+        console.log(response)
+      })
     },
     handleClickTag (name) {
       this.openToolbar()
