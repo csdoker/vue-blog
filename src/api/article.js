@@ -1,10 +1,9 @@
 import request from '@/utils/request'
 
-export function getArticle (params) {
+export function getArticle (number) {
   return request({
-    url: '/api/post',
-    method: 'get',
-    params
+    url: `https://api.github.com/repos/csdoker/blog-server/issues/${number}`,
+    method: 'get'
   })
 }
 

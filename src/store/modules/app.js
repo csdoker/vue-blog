@@ -3,7 +3,8 @@ const state = {
     opened: false,
     keyword: '',
     tabs: [false, false]
-  }
+  },
+  articles: []
 }
 
 const mutations = {
@@ -20,6 +21,9 @@ const mutations = {
   },
   SET_KEYWORD: (state, keyword) => {
     state.toolbar.keyword = keyword
+  },
+  SET_ARTICLES: (state, articles) => {
+    state.articles = articles
   }
 }
 

@@ -18,21 +18,21 @@ hljs.registerLanguage('css', css)
 // hljs.registerLanguage('scss', scss)
 // hljs.registerLanguage('markdown', markdown)
 
-// const Highlight = {}
-// Highlight.install = function (Vue, options) {
-//   Vue.directive('highlight', function (el) {
-//     const blocks = el.querySelectorAll('pre code')
-//     blocks.forEach((block) => {
-//       hljs.highlightBlock(block)
-//     })
-//   })
-// }
-
-// export default Highlight
-
-export const highlightCode = () => {
-  const blocks = document.querySelectorAll('pre code')
-  blocks.forEach((block) => {
-    hljs.highlightBlock(block)
+const Highlight = {}
+Highlight.install = function (Vue, options) {
+  Vue.directive('highlight', function (el) {
+    const blocks = el.querySelectorAll('pre code')
+    blocks.forEach((block) => {
+      hljs.highlightBlock(block)
+    })
   })
 }
+
+export default Highlight
+
+// export const highlightCode = () => {
+//   const blocks = document.querySelectorAll('pre code')
+//   blocks.forEach((block) => {
+//     hljs.highlightBlock(block)
+//   })
+// }

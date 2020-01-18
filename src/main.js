@@ -10,8 +10,8 @@ import router from './router'
 import store from './store'
 
 // Vue.use(animated)
-// import Highlight from '@/utils/highlight.js'
-// Vue.use(Highlight)
+import Highlight from '@/utils/highlight.js'
+Vue.use(Highlight)
 
 Vue.config.productionTip = false
 

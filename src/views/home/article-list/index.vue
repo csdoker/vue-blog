@@ -25,7 +25,9 @@
         <div class="article-entry">
           <!-- <component :is="getSummary(article.id)"></component> -->
           <!-- <component :is="getSummaries[article.id]"></component> -->
-          <component :is="article.summary"></component>
+          <!-- <component :is="article.summary"></component> -->
+          <!-- <vue-markdown :source="article.summary"></vue-markdown> -->
+          <marked-content :content="article.summary"></marked-content>
         </div>
         <div class="article-info">
           <div class="article-tag">
@@ -49,8 +51,9 @@
 
 <script>
 // import BLOGENTRIES from '@/data/blogs.json'
-import { highlightCode } from '@/utils/highlight.js'
+// import { highlightCode } from '@/utils/highlight.js'
 import { mapState, mapMutations } from 'vuex'
+import MarkedContent from '@/components/marked'
 
 // const components = {}
 // BLOGENTRIES.forEach(article => {
@@ -59,7 +62,9 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'ArticleList',
-  // components,
+  components: {
+    MarkedContent
+  },
   data () {
     return {}
   },
@@ -101,12 +106,12 @@ export default {
       setKeyword: 'SET_KEYWORD'
     })
   },
-  mounted () {
-    highlightCode()
-  },
-  updated () {
-    highlightCode()
-  },
+  // mounted () {
+  //   highlightCode()
+  // },
+  // updated () {
+  //   highlightCode()
+  // },
   created () {
     // 走摘要里拿列表显示的数据
     // 暂时先这样处理，等后台完成后，让后台处理文章摘要的截取逻辑

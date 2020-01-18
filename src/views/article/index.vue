@@ -14,7 +14,8 @@
         <div class="article-entry">
           <div class="article-data">
             <!-- <router-view /> -->
-            <component :is="articleData.content"></component>
+            <!-- <component :is="articleData.content"></component> -->
+            <marked-content :content="articleData.content"></marked-content>
             <!-- markdown渲染数据 -->
             <!-- <vue-markdown v-if="articleData.articleContent" :source="articleData.articleContent"></vue-markdown> -->
           </div>
@@ -65,12 +66,16 @@
 
 <script>
 import BLOGENTRIES from '@/data/blogs.json'
-import { highlightCode } from '@/utils/highlight.js'
-import { getArticles } from '@/api/article'
+// import { highlightCode } from '@/utils/highlight.js'
+import { getArticle } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
+import MarkedContent from '@/components/marked'
 
 export default {
   name: 'Article',
+  components: {
+    MarkedContent
+  },
   data () {
     return {
       articleData: {}
@@ -84,7 +89,7 @@ export default {
   },
   computed: {
     articles () {
-      return BLOGENTRIES
+      return BLOGENTRIES.sort((a, b) => b.id - a.id)
     },
     nextArticle () {
       return this.articleData.id === this.articles.length ? {} : this.articles.filter(article => article.id === this.articleData.id + 1)[0]
@@ -99,12 +104,13 @@ export default {
   methods: {
     getData () {
       this.articleData = this.articles.filter(article => article.name === this.$route.params.name)[0]
-      this.articleData.content = () => import(`@/post/${this.articleData.name}.md`)
-      // getArticle(this.articleData.name).then(response => {
-      //   console.log(response.data)
-      // })
-      getArticles().then(response => {
-        console.log(response)
+      getArticle(this.articleData.id).then(response => {
+        this.articleData.content = response.body
+        console.log(this.articleData)
+        // this.articleData.content = () => import(`@/post/${this.articleData.name}.md`)
+        // getArticle(this.articleData.name).then(response => {
+        //   console.log(response.data)
+        // })
       })
     },
     handleClickTag (name) {
@@ -115,13 +121,13 @@ export default {
       openToolbar: 'OPEN_TOOLBAR',
       setKeyword: 'SET_KEYWORD'
     })
-  },
-  mounted () {
-    highlightCode()
-  },
-  updated () {
-    highlightCode()
   }
+  // mounted () {
+  //   highlightCode()
+  // },
+  // updated () {
+  //   highlightCode()
+  // }
   // created () {
   //   this.articleData = this.articles.filter(article => article.name === this.$route.name)[0]
   // }

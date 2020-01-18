@@ -10,6 +10,8 @@ import ArticleList from './article-list'
 import Pager from '@/components/Pager'
 import BLOGENTRIES from '@/data/blogs.json'
 import _ from 'lodash'
+import { getArticles } from '@/api/article'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Home',
@@ -22,7 +24,7 @@ export default {
       currentPage: 1,
       maxCount: 5,
       totalCount: BLOGENTRIES.length,
-      articles: [],
+      // articles: [],
       blogEntries: []
     }
   },
@@ -41,22 +43,31 @@ export default {
         pageCount = (this.totalCount - this.totalCount % this.maxCount) / this.maxCount + 1
       }
       return pageCount
-    }
+    },
+    ...mapState({
+      articles: state => state.app.articles
+    })
   },
   methods: {
-    getArticles () {
-      const start = (this.currentPage - 1) * this.maxCount
-      const end = start + this.maxCount
-      this.articles = this.blogEntries.slice(start, end)
-      this.articles.forEach(article => {
-        article.summary = () => import(`@/summary/${article.name}.md`)
+    getArticleList (page) {
+      getArticles(page).then(response => {
+        const start = (page - 1) * this.maxCount
+        const end = start + this.maxCount
+        const articles = this.blogEntries.slice(start, end)
+        articles.forEach(article => {
+          // article.summary = () => import(`@/summary/${article.name}.md`)
+          article.summary = response.filter(item => item.number === article.id)[0].body.split('<!--more-->')[0]
+          // article.content = response.filter(item => item.number === article.id)[0].body
+        })
+        this.setArticles(articles)
+        // console.log(this.articles)
       })
     },
     updatePage (page) {
       this.currentPage = page
-      this.getArticles()
+      this.getArticleList(page)
       // this.$router.push({ path: `/home/page/${page}` })
-    }
+    },
     // setCurrentPage () {
     //   console.log(this.$route)
     //   const index = this.$route.params.index
@@ -68,11 +79,14 @@ export default {
     //     }
     //   }
     // }
+    ...mapMutations({
+      setArticles: 'SET_ARTICLES'
+    })
   },
   created () {
     this.blogEntries = _.cloneDeep(BLOGENTRIES)
     this.blogEntries.sort((a, b) => b.id - a.id)
-    this.getArticles()
+    this.getArticleList(this.currentPage)
   }
 }
 </script>
