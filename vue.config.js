@@ -51,31 +51,31 @@ module.exports = {
         deleteOriginalAssets: false
       })
     ]
-  },
-  chainWebpack: config => {
-    config.module.rule('md')
-      .test(/\.md/)
-      .use('vue-loader')
-      .loader('vue-loader')
-      .end()
-      .use('vue-markdown-loader')
-      .loader('vue-markdown-loader/lib/markdown-compiler')
-      .options({
-        raw: true,
-        preset: 'default',
-        breaks: true,
-        preventExtract: true
-      })
-    // if (process.env.NODE_ENV === 'production') {
-    //   return {
-    //     plugins: [
-    //       new CompressionPlugin({
-    //         test: /\.js$|\.html$|\.css/,
-    //         threshold: 10240,
-    //         deleteOriginalAssets: false
-    //       })
-    //     ]
-    //   }
-    // }
   }
+  // chainWebpack: config => {
+  //   config.module.rule('md')
+  //     .test(/\.md/)
+  //     .use('vue-loader')
+  //     .loader('vue-loader')
+  //     .end()
+  //     .use('vue-markdown-loader')
+  //     .loader('vue-markdown-loader/lib/markdown-compiler')
+  //     .options({
+  //       raw: true,
+  //       preset: 'default',
+  //       breaks: true,
+  //       preventExtract: true
+  //     })
+  //   // if (process.env.NODE_ENV === 'production') {
+  //   //   return {
+  //   //     plugins: [
+  //   //       new CompressionPlugin({
+  //   //         test: /\.js$|\.html$|\.css/,
+  //   //         threshold: 10240,
+  //   //         deleteOriginalAssets: false
+  //   //       })
+  //   //     ]
+  //   //   }
+  //   // }
+  // }
 }
