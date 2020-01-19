@@ -26,21 +26,21 @@ export default {
       default: ''
     }
   },
-  data () {
-    return {
-      compiledMarkdown: ''
-    }
-  },
-  watch: {
-    content (val) {
-      this.compiledMarkdown = marked(val)
+  // data () {
+  //   return {
+  //     compiledMarkdown: ''
+  //   }
+  // },
+  // watch: {
+  //   content (val) {
+  //     this.compiledMarkdown = marked(val)
+  //   }
+  // }
+  computed: {
+    compiledMarkdown () {
+      // return marked(this.content, { sanitize: true })
+      return marked(this.content)
     }
   }
-  // computed: {
-    // compiledMarkdown () {
-    //   // return marked(this.content, { sanitize: true })
-    //   return marked(this.content)
-    // }
-  // }
 }
 </script>

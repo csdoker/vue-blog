@@ -4,20 +4,20 @@
       <div class="article-inner">
         <header class="article-header">
           <div class="article-header-inner">
-            <h1 class="article-title">{{articleData.name}}</h1>
+            <h1 class="article-title">{{article.name}}</h1>
             <div class="article-date">
               <i class="date-icon iconfont icon-calendar"></i>
-              <span class="date-time">{{articleData.date}}</span>
+              <span class="date-time">{{article.date}}</span>
             </div>
           </div>
         </header>
         <div class="article-entry">
           <div class="article-data">
             <!-- <router-view /> -->
-            <!-- <component :is="articleData.content"></component> -->
-            <marked-content :content="articleData.content"></marked-content>
+            <!-- <component :is="article.content"></component> -->
+            <marked-content :content="article.content"></marked-content>
             <!-- markdown渲染数据 -->
-            <!-- <vue-markdown v-if="articleData.articleContent" :source="articleData.articleContent"></vue-markdown> -->
+            <!-- <vue-markdown v-if="article.articleContent" :source="article.articleContent"></vue-markdown> -->
           </div>
           <!-- <article-directory></article-directory> -->
         </div>
@@ -26,7 +26,7 @@
             <i class="tag-icon iconfont icon-tag-fill"></i>
             <div
               class="tag-item"
-              v-for="(tag, index) in articleData.tags"
+              v-for="(tag, index) in article.tags"
               :key="index"
               @click.stop="handleClickTag(tag)"
             >
@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import BLOGENTRIES from '@/data/blogs.json'
 // import { highlightCode } from '@/utils/highlight.js'
 import { getArticle } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
@@ -77,9 +76,7 @@ export default {
     MarkedContent
   },
   data () {
-    return {
-      articleData: {}
-    }
+    return {}
   },
   watch: {
     '$route': {
@@ -88,29 +85,29 @@ export default {
     }
   },
   computed: {
-    articles () {
-      return BLOGENTRIES.sort((a, b) => b.id - a.id)
-    },
-    nextArticle () {
-      return this.articleData.id === this.articles.length ? {} : this.articles.filter(article => article.id === this.articleData.id + 1)[0]
-    },
-    previousArticle () {
-      return this.articleData.id === 1 ? {} : this.articles.filter(article => article.id === this.articleData.id - 1)[0]
-    },
+    // articles () {
+    //   return BLOGENTRIES.sort((a, b) => b.id - a.id)
+    // },
     ...mapState({
-      toolbar: state => state.app.toolbar
+      toolbar: state => state.app.toolbar,
+      article: state => state.app.article,
+      blogEntries: state => state.app.blogEntries,
+      previousArticle: state => state.app.previousArticle,
+      nextArticle: state => state.app.nextArticle
     })
   },
   methods: {
     getData () {
-      this.articleData = this.articles.filter(article => article.name === this.$route.params.name)[0]
-      getArticle(this.articleData.id).then(response => {
-        this.articleData.content = response.body
-        console.log(this.articleData)
-        // this.articleData.content = () => import(`@/post/${this.articleData.name}.md`)
-        // getArticle(this.articleData.name).then(response => {
+      const article = this.blogEntries.filter(article => article.name === this.$route.params.name)[0]
+      this.setPreviousArticle(article.id === 1 ? {} : this.blogEntries.filter(item => item.id === article.id - 1)[0])
+      this.setNextArticle(article.id === this.blogEntries.length ? {} : this.blogEntries.filter(item => item.id === article.id + 1)[0])
+      getArticle(article.id).then(response => {
+        article.content = response.body
+        // this.article.content = () => import(`@/post/${this.article.name}.md`)
+        // getArticle(this.article.name).then(response => {
         //   console.log(response.data)
         // })
+        this.setArticle(article)
       })
     },
     handleClickTag (name) {
@@ -119,7 +116,10 @@ export default {
     },
     ...mapMutations({
       openToolbar: 'OPEN_TOOLBAR',
-      setKeyword: 'SET_KEYWORD'
+      setKeyword: 'SET_KEYWORD',
+      setArticle: 'SET_ARTICLE',
+      setPreviousArticle: 'SET_PREVIOUS_ARTICLE',
+      setNextArticle: 'SET_NEXT_ARTICLE'
     })
   }
   // mounted () {
@@ -129,7 +129,7 @@ export default {
   //   highlightCode()
   // }
   // created () {
-  //   this.articleData = this.articles.filter(article => article.name === this.$route.name)[0]
+  //   this.article = this.blogEntries.filter(article => article.name === this.$route.name)[0]
   // }
 }
 </script>

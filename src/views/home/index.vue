@@ -8,7 +8,6 @@
 <script>
 import ArticleList from './article-list'
 import Pager from '@/components/Pager'
-import BLOGENTRIES from '@/data/blogs.json'
 import _ from 'lodash'
 import { getArticles } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
@@ -22,10 +21,9 @@ export default {
   data () {
     return {
       currentPage: 1,
-      maxCount: 5,
-      totalCount: BLOGENTRIES.length,
+      maxCount: 5
       // articles: [],
-      blogEntries: []
+      // blogEntries: []
     }
   },
   // watch: {
@@ -35,6 +33,9 @@ export default {
   //   }
   // },
   computed: {
+    totalCount () {
+      return this.blogEntries.length
+    },
     pageCount () {
       let pageCount = 0
       if (this.totalCount % this.maxCount === 0) {
@@ -45,7 +46,8 @@ export default {
       return pageCount
     },
     ...mapState({
-      articles: state => state.app.articles
+      articles: state => state.app.articles,
+      blogEntries: state => state.app.blogEntries
     })
   },
   methods: {
@@ -84,8 +86,6 @@ export default {
     })
   },
   created () {
-    this.blogEntries = _.cloneDeep(BLOGENTRIES)
-    this.blogEntries.sort((a, b) => b.id - a.id)
     this.getArticleList(this.currentPage)
   }
 }

@@ -9,6 +9,7 @@
 
 <script>
 import { AppCanvas, Sidebar, Toolbar, AppMain } from './components'
+import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -26,8 +27,12 @@ export default {
   },
   methods: {
     ...mapMutations({
-      closeToolbar: 'CLOSE_TOOLBAR'
+      closeToolbar: 'CLOSE_TOOLBAR',
+      setBlogEntries: 'SET_BLOGENTRIES'
     })
+  },
+  created () {
+    this.setBlogEntries(BLOGENTRIES.sort((a, b) => b.id - a.id))
   }
 }
 </script>

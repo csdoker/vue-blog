@@ -4,7 +4,11 @@ const state = {
     keyword: '',
     tabs: [false, false]
   },
-  articles: []
+  blogEntries: [],
+  articles: [],
+  article: {},
+  previousArticle: {},
+  nextArticle: {}
 }
 
 const mutations = {
@@ -22,8 +26,20 @@ const mutations = {
   SET_KEYWORD: (state, keyword) => {
     state.toolbar.keyword = keyword
   },
+  SET_BLOGENTRIES: (state, blogEntries) => {
+    state.blogEntries = blogEntries
+  },
   SET_ARTICLES: (state, articles) => {
     state.articles = articles
+  },
+  SET_ARTICLE: (state, article) => {
+    state.article = article
+  },
+  SET_PREVIOUS_ARTICLE: (state, article) => {
+    state.previousArticle = article
+  },
+  SET_NEXT_ARTICLE: (state, article) => {
+    state.nextArticle = article
   }
 }
 
