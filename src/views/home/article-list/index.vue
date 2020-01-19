@@ -34,12 +34,13 @@
             <i class="tag-icon iconfont icon-tag-fill"></i>
             <div
               class="tag-item"
-              v-for="(tag, index) in article.tags"
-              @click.stop="handleClickTag(tag)"
-              :key="index"
+              v-for="tag in article.tags"
+              @click.stop="handleClickTag(tag.name)"
+              :key="tag.id"
+              :style="`background-color: #${tag.color};border-right-color: #${tag.color}`"
             >
               {{
-                tag
+                tag.name
               }}
             </div>
           </div>
@@ -69,20 +70,21 @@ export default {
     return {}
   },
   props: {
-    articles: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    },
-    maxCount: {
-      type: Number,
-      default: 5
-    }
+    // articles: {
+    //   type: Array,
+    //   default: () => {
+    //     return []
+    //   }
+    // },
+    // maxCount: {
+    //   type: Number,
+    //   default: 5
+    // }
   },
   computed: {
     ...mapState({
-      toolbar: state => state.app.toolbar
+      toolbar: state => state.app.toolbar,
+      articles: state => state.app.articles
     })
     // getSummaries () {
     //   const summaries = {}
@@ -183,7 +185,7 @@ export default {
             margin-right: 10px;
           }
           .tag-item {
-            background-color: #ba8f6c;
+            // background-color: #ba8f6c;
             font-weight: 400;
             font-size: 10px;
             color: #fff;
@@ -204,7 +206,8 @@ export default {
               top: 0;
               left: -18px;
               border: 9px solid transparent;
-              border-right-color: #ba8f6c;
+              // border-right-color: #ba8f6c;
+              border-right-color: inherit;
             }
             &:after {
               content: ' ';

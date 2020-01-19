@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <article-list :articles="articles" :maxCount="maxCount" />
+    <article-list />
     <pager :hide-if-one-page="false" :total-page="pageCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 import ArticleList from './article-list'
 import Pager from '@/components/Pager'
-import _ from 'lodash'
+// import _ from 'lodash'
 import { getArticles } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 
@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       currentPage: 1,
-      maxCount: 5
+      perPage: 5
       // articles: [],
       // blogEntries: []
     }
@@ -38,27 +38,33 @@ export default {
     },
     pageCount () {
       let pageCount = 0
-      if (this.totalCount % this.maxCount === 0) {
-        pageCount = this.totalCount / this.maxCount
+      if (this.totalCount % this.perPage === 0) {
+        pageCount = this.totalCount / this.perPage
       } else {
-        pageCount = (this.totalCount - this.totalCount % this.maxCount) / this.maxCount + 1
+        pageCount = (this.totalCount - this.totalCount % this.perPage) / this.perPage + 1
       }
       return pageCount
     },
     ...mapState({
-      articles: state => state.app.articles,
       blogEntries: state => state.app.blogEntries
     })
   },
   methods: {
     getArticleList (page) {
-      getArticles(page).then(response => {
-        const start = (page - 1) * this.maxCount
-        const end = start + this.maxCount
+      getArticles(page, this.perPage).then(response => {
+        const start = (page - 1) * this.perPage
+        const end = start + this.perPage
         const articles = this.blogEntries.slice(start, end)
         articles.forEach(article => {
           // article.summary = () => import(`@/summary/${article.name}.md`)
           article.summary = response.filter(item => item.number === article.id)[0].body.split('<!--more-->')[0]
+          article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {
+            return {
+              name: label.name,
+              color: label.color,
+              id: label.id
+            }
+          })
           // article.content = response.filter(item => item.number === article.id)[0].body
         })
         this.setArticles(articles)

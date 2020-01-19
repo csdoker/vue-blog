@@ -7,14 +7,14 @@ export function getArticle (number) {
   })
 }
 
-export function getArticles (page = 1) {
+export function getArticles (page = 1, per_page = 5) {
   return request(
     {
       url: 'https://api.github.com/repos/csdoker/blog-server/issues',
       method: 'get',
       params: {
         page,
-        per_page: 5
+        per_page
       }
     }
   )

@@ -6,6 +6,7 @@ const state = {
   },
   blogEntries: [],
   articles: [],
+  archives: [],
   article: {},
   previousArticle: {},
   nextArticle: {}
@@ -31,6 +32,9 @@ const mutations = {
   },
   SET_ARTICLES: (state, articles) => {
     state.articles = articles
+  },
+  SET_ARCHIVES: (state, archives) => {
+    state.archives = archives
   },
   SET_ARTICLE: (state, article) => {
     state.article = article

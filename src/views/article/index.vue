@@ -26,12 +26,13 @@
             <i class="tag-icon iconfont icon-tag-fill"></i>
             <div
               class="tag-item"
-              v-for="(tag, index) in article.tags"
-              :key="index"
-              @click.stop="handleClickTag(tag)"
+              v-for="tag in article.tags"
+              :key="tag.id"
+              @click.stop="handleClickTag(tag.name)"
+              :style="`background-color: #${tag.color};border-right-color: #${tag.color}`"
             >
               {{
-                tag
+                tag.name
               }}
             </div>
           </div>
@@ -103,6 +104,13 @@ export default {
       this.setNextArticle(article.id === this.blogEntries.length ? {} : this.blogEntries.filter(item => item.id === article.id + 1)[0])
       getArticle(article.id).then(response => {
         article.content = response.body
+        article.tags = response.labels.map(label => {
+          return {
+            name: label.name,
+            color: label.color,
+            id: label.id
+          }
+        })
         // this.article.content = () => import(`@/post/${this.article.name}.md`)
         // getArticle(this.article.name).then(response => {
         //   console.log(response.data)
@@ -201,7 +209,7 @@ export default {
             margin-right: 10px;
           }
           .tag-item {
-            background-color: #ba8f6c;
+            // background-color: #ba8f6c;
             font-weight: 400;
             font-size: 10px;
             color: #fff;
@@ -222,7 +230,8 @@ export default {
               top: 0;
               left: -18px;
               border: 9px solid transparent;
-              border-right-color: #ba8f6c;
+              // border-right-color: #ba8f6c;
+              border-right-color: inherit;
             }
             &:after {
               content: ' ';
