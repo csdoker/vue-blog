@@ -20,6 +20,15 @@ export function getArticles (page = 1, per_page = 5) {
   )
 }
 
+export function getAllArticles () {
+  return request(
+    {
+      url: 'https://api.github.com/repos/csdoker/blog-server/issues',
+      method: 'get'
+    }
+  )
+}
+
 export function getBlogEntries () {
   return request({
     url: 'https://raw.githubusercontent.com/csdoker/blog-server/master/data/blogs.json',

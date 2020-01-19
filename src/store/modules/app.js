@@ -8,6 +8,7 @@ const state = {
   articles: [],
   archives: [],
   article: {},
+  allTags: [],
   previousArticle: {},
   nextArticle: {}
 }
@@ -35,6 +36,9 @@ const mutations = {
   },
   SET_ARCHIVES: (state, archives) => {
     state.archives = archives
+  },
+  SET_ALL_TAGS: (state, allTags) => {
+    state.allTags = allTags
   },
   SET_ARTICLE: (state, article) => {
     state.article = article

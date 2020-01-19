@@ -11,7 +11,6 @@
 import { AppCanvas, Sidebar, Toolbar, AppMain } from './components'
 // import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
-import { getBlogEntries } from '@/api/article'
 
 export default {
   name: 'Layout',
@@ -27,15 +26,17 @@ export default {
     })
   },
   methods: {
+    // getBlogEntriesData () {
+    //   getBlogEntries().then(response => {
+    //     this.setBlogEntries(response.sort((a, b) => b.id - a.id))
+    //   })
+    // },
     ...mapMutations({
-      closeToolbar: 'CLOSE_TOOLBAR',
-      setBlogEntries: 'SET_BLOGENTRIES'
+      closeToolbar: 'CLOSE_TOOLBAR'
     })
   },
   created () {
-    getBlogEntries().then(response => {
-      this.setBlogEntries(response.sort((a, b) => b.id - a.id))
-    })
+    // this.getBlogEntriesData()
   }
 }
 </script>

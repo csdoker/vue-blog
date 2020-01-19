@@ -67,7 +67,7 @@
 
 <script>
 // import { highlightCode } from '@/utils/highlight.js'
-import { getArticle } from '@/api/article'
+import { getArticle, getBlogEntries } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 import MarkedContent from '@/components/marked'
 
@@ -99,23 +99,26 @@ export default {
   },
   methods: {
     getData () {
-      const article = this.blogEntries.filter(article => article.name === this.$route.params.name)[0]
-      this.setPreviousArticle(article.id === 1 ? {} : this.blogEntries.filter(item => item.id === article.id - 1)[0])
-      this.setNextArticle(article.id === this.blogEntries.length ? {} : this.blogEntries.filter(item => item.id === article.id + 1)[0])
-      getArticle(article.id).then(response => {
-        article.content = response.body
-        article.tags = response.labels.map(label => {
-          return {
-            name: label.name,
-            color: label.color,
-            id: label.id
-          }
+      getBlogEntries().then(response => {
+        this.setBlogEntries(response.sort((a, b) => b.id - a.id))
+        const article = this.blogEntries.filter(article => article.name === this.$route.params.name)[0]
+        this.setPreviousArticle(article.id === 1 ? {} : this.blogEntries.filter(item => item.id === article.id - 1)[0])
+        this.setNextArticle(article.id === this.blogEntries.length ? {} : this.blogEntries.filter(item => item.id === article.id + 1)[0])
+        getArticle(article.id).then(response => {
+          article.content = response.body
+          article.tags = response.labels.map(label => {
+            return {
+              name: label.name,
+              color: label.color,
+              id: label.id
+            }
+          })
+          // this.article.content = () => import(`@/post/${this.article.name}.md`)
+          // getArticle(this.article.name).then(response => {
+          //   console.log(response.data)
+          // })
+          this.setArticle(article)
         })
-        // this.article.content = () => import(`@/post/${this.article.name}.md`)
-        // getArticle(this.article.name).then(response => {
-        //   console.log(response.data)
-        // })
-        this.setArticle(article)
       })
     },
     handleClickTag (name) {
@@ -127,7 +130,8 @@ export default {
       setKeyword: 'SET_KEYWORD',
       setArticle: 'SET_ARTICLE',
       setPreviousArticle: 'SET_PREVIOUS_ARTICLE',
-      setNextArticle: 'SET_NEXT_ARTICLE'
+      setNextArticle: 'SET_NEXT_ARTICLE',
+      setBlogEntries: 'SET_BLOGENTRIES'
     })
   }
   // mounted () {

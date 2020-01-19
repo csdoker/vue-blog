@@ -10,7 +10,7 @@ import ArchiveList from './archive-list'
 import Pager from '@/components/Pager'
 // import BLOGENTRIES from '@/data/blogs.json'
 // import _ from 'lodash'
-import { getArticles } from '@/api/article'
+import { getArticles, getBlogEntries } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -51,21 +51,24 @@ export default {
       this.getArchiveList(page)
     },
     getArchiveList (page) {
-      getArticles(page, this.perPage).then(response => {
-        const start = (page - 1) * this.perPage
-        const end = start + this.perPage
-        const articles = this.blogEntries.slice(start, end)
-        articles.forEach(article => {
-          console.log(response.filter(item => item.number === article.id)[0])
-          article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {
-            return {
-              name: label.name,
-              color: label.color,
-              id: label.id
-            }
+      getBlogEntries().then(response => {
+        this.setBlogEntries(response.sort((a, b) => b.id - a.id))
+        getArticles(page, this.perPage).then(response => {
+          const start = (page - 1) * this.perPage
+          const end = start + this.perPage
+          const articles = this.blogEntries.slice(start, end)
+          articles.forEach(article => {
+            console.log(response.filter(item => item.number === article.id)[0])
+            article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {
+              return {
+                name: label.name,
+                color: label.color,
+                id: label.id
+              }
+            })
           })
+          this.setArchives(this.formatArchives(articles))
         })
-        this.setArchives(this.formatArchives(articles))
       })
     },
     formatArchives (articles) {
@@ -136,7 +139,8 @@ export default {
       return result
     },
     ...mapMutations({
-      setArchives: 'SET_ARCHIVES'
+      setArchives: 'SET_ARCHIVES',
+      setBlogEntries: 'SET_BLOGENTRIES'
     })
   },
   created () {

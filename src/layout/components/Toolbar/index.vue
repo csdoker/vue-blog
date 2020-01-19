@@ -49,13 +49,13 @@
             <li
               class="tag-item"
               @click="handleTagClick(tag.name)"
-              v-for="(tag, index) in tags"
+              v-for="(tag, index) in allTags"
               :key="index"
             >
               <a
                 href="javascript:;"
                 class="tag-link"
-                :class="`color${tag.color}`"
+                :style="`background-color: #${tag.color};border-right-color: #${tag.color}`"
                 >{{ tag.name }}</a
               >
             </li>
@@ -133,12 +133,14 @@
 <script>
 // import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
+import { getAllArticles, getBlogEntries } from '@/api/article'
+// import _ from 'lodash'
 
 export default {
   name: 'Toolbar',
   data () {
     return {
-      tags: [],
+      // tags: [],
       archives: [],
       isShowTags: false
     }
@@ -157,7 +159,8 @@ export default {
     // },
     ...mapState({
       toolbar: state => state.app.toolbar,
-      blogEntries: state => state.app.blogEntries
+      blogEntries: state => state.app.blogEntries,
+      allTags: state => state.app.allTags
     })
   },
   watch: {
@@ -171,20 +174,30 @@ export default {
     }
   },
   methods: {
-    getTags () {
-      this.archives.forEach(archive => {
-        archive.tags.forEach(tag => {
-          this.tags.push(tag)
+    getAllTagsData () {
+      getAllArticles().then(response => {
+        const tags = []
+        response.forEach(article => {
+          article.labels.forEach(tag => {
+            tags.push({
+              name: tag.name,
+              color: tag.color
+            })
+          })
         })
+        this.setAllTags(tags)
+        // this.tags = [...new Set(this.tags)]
+        // this.tags = this.tags.map(tag => ({
+        //   name: tag,
+        //   color: Math.round(1 + Math.random() * 4)
+        // }))
       })
-      this.tags = [...new Set(this.tags)]
-      this.tags = this.tags.map(tag => ({
-        name: tag,
-        color: Math.round(1 + Math.random() * 4)
-      }))
     },
-    getArchives () {
-      this.archives = this.blogEntries
+    getArchivesData () {
+      getBlogEntries().then(response => {
+        this.setBlogEntries(response.sort((a, b) => b.id - a.id))
+        this.archives = this.blogEntries
+      })
     },
     handleSwitchTab (index) {
       this.toggleTabs(index)
@@ -204,12 +217,14 @@ export default {
     ...mapMutations({
       toggleTabs: 'TOGGLE_TABS',
       setKeyword: 'SET_KEYWORD',
-      closeToolbar: 'CLOSE_TOOLBAR'
+      closeToolbar: 'CLOSE_TOOLBAR',
+      setAllTags: 'SET_ALL_TAGS',
+      setBlogEntries: 'SET_BLOGENTRIES'
     })
   },
   created () {
-    this.getArchives()
-    this.getTags()
+    this.getArchivesData()
+    this.getAllTagsData()
   }
 }
 </script>
@@ -389,6 +404,7 @@ export default {
                 top: 0;
                 left: -18px;
                 border: 9px solid transparent;
+                border-right-color: inherit;
               }
 
               &:after {

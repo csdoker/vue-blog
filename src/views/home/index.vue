@@ -9,7 +9,7 @@
 import ArticleList from './article-list'
 import Pager from '@/components/Pager'
 // import _ from 'lodash'
-import { getArticles } from '@/api/article'
+import { getArticles, getBlogEntries } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -51,24 +51,27 @@ export default {
   },
   methods: {
     getArticleList (page) {
-      getArticles(page, this.perPage).then(response => {
-        const start = (page - 1) * this.perPage
-        const end = start + this.perPage
-        const articles = this.blogEntries.slice(start, end)
-        articles.forEach(article => {
-          // article.summary = () => import(`@/summary/${article.name}.md`)
-          article.summary = response.filter(item => item.number === article.id)[0].body.split('<!--more-->')[0]
-          article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {
-            return {
-              name: label.name,
-              color: label.color,
-              id: label.id
-            }
+      getBlogEntries().then(response => {
+        this.setBlogEntries(response.sort((a, b) => b.id - a.id))
+        getArticles(page, this.perPage).then(response => {
+          const start = (page - 1) * this.perPage
+          const end = start + this.perPage
+          const articles = this.blogEntries.slice(start, end)
+          articles.forEach(article => {
+            // article.summary = () => import(`@/summary/${article.name}.md`)
+            article.summary = response.filter(item => item.number === article.id)[0].body.split('<!--more-->')[0]
+            article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {
+              return {
+                name: label.name,
+                color: label.color,
+                id: label.id
+              }
+            })
+            // article.content = response.filter(item => item.number === article.id)[0].body
           })
-          // article.content = response.filter(item => item.number === article.id)[0].body
+          this.setArticles(articles)
+          // console.log(this.articles)
         })
-        this.setArticles(articles)
-        // console.log(this.articles)
       })
     },
     updatePage (page) {
@@ -88,7 +91,8 @@ export default {
     //   }
     // }
     ...mapMutations({
-      setArticles: 'SET_ARTICLES'
+      setArticles: 'SET_ARTICLES',
+      setBlogEntries: 'SET_BLOGENTRIES'
     })
   },
   created () {
