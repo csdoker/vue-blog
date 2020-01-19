@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import BLOGENTRIES from '@/data/blogs.json'
+// import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -152,20 +152,21 @@ export default {
         this.setKeyword(newVal)
       }
     },
-    articles () {
-      return BLOGENTRIES.sort((a, b) => b.id - a.id)
-    },
+    // articles () {
+    //   return BLOGENTRIES.sort((a, b) => b.id - a.id)
+    // },
     ...mapState({
-      toolbar: state => state.app.toolbar
+      toolbar: state => state.app.toolbar,
+      blogEntries: state => state.app.blogEntries
     })
   },
   watch: {
     keyword (val) {
       const isTag = val.substr(0, 1) === '#'
       if (isTag) {
-        this.archives = this.articles.filter(archive => archive.tags.includes(val.substr(1)))
+        this.archives = this.blogEntries.filter(archive => archive.tags.includes(val.substr(1)))
       } else {
-        this.archives = this.articles.filter(archive => archive.name.indexOf(val) > -1)
+        this.archives = this.blogEntries.filter(archive => archive.name.indexOf(val) > -1)
       }
     }
   },
@@ -183,7 +184,7 @@ export default {
       }))
     },
     getArchives () {
-      this.archives = this.articles
+      this.archives = this.blogEntries
     },
     handleSwitchTab (index) {
       this.toggleTabs(index)

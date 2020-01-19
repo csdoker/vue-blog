@@ -9,8 +9,9 @@
 
 <script>
 import { AppCanvas, Sidebar, Toolbar, AppMain } from './components'
-import BLOGENTRIES from '@/data/blogs.json'
+// import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
+import { getBlogEntries } from '@/api/article'
 
 export default {
   name: 'Layout',
@@ -32,7 +33,9 @@ export default {
     })
   },
   created () {
-    this.setBlogEntries(BLOGENTRIES.sort((a, b) => b.id - a.id))
+    getBlogEntries().then(response => {
+      this.setBlogEntries(response.sort((a, b) => b.id - a.id))
+    })
   }
 }
 </script>

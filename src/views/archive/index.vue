@@ -8,7 +8,7 @@
 <script>
 import ArchiveList from './archive-list'
 import Pager from '@/components/Pager'
-import BLOGENTRIES from '@/data/blogs.json'
+// import BLOGENTRIES from '@/data/blogs.json'
 // import _ from 'lodash'
 import { getArticles } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'

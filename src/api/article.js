@@ -19,3 +19,10 @@ export function getArticles (page = 1, per_page = 5) {
     }
   )
 }
+
+export function getBlogEntries () {
+  return request({
+    url: 'https://raw.githubusercontent.com/csdoker/blog-server/master/data/blogs.json',
+    method: 'get'
+  })
+}
