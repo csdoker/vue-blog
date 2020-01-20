@@ -9,7 +9,7 @@
 import ArchiveList from './archive-list'
 import Pager from '@/components/Pager'
 // import BLOGENTRIES from '@/data/blogs.json'
-import _ from 'lodash'
+// import _ from 'lodash'
 import { getArticles, getBlogEntries } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 
@@ -22,16 +22,17 @@ export default {
   data () {
     return {
       currentPage: 1,
-      perPage: 10
+      perPage: 10,
+      totalCount: 0
       // totalCount: BLOGENTRIES.length,
       // blogEntries: [],
       // articles: []
     }
   },
   computed: {
-    totalCount () {
-      return this.blogEntries.length
-    },
+    // totalCount () {
+    //   return this.blogEntries.length
+    // },
     pageCount () {
       let pageCount = 0
       if (this.totalCount % this.perPage === 0) {
@@ -42,7 +43,7 @@ export default {
       return pageCount
     },
     ...mapState({
-      blogEntries: state => state.app.blogEntries
+      // blogEntries: state => state.app.blogEntries
     })
   },
   methods: {
@@ -52,8 +53,8 @@ export default {
     },
     getArchiveList (page) {
       getBlogEntries().then(response => {
-        this.setBlogEntries(response.sort((a, b) => b.id - a.id))
-        const blogEntries = _.cloneDeep(this.blogEntries)
+        const blogEntries = response.sort((a, b) => b.id - a.id)
+        this.totalCount = blogEntries.length
         getArticles(page, this.perPage).then(response => {
           const start = (page - 1) * this.perPage
           const end = start + this.perPage

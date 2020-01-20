@@ -8,7 +8,7 @@
 <script>
 import ArticleList from './article-list'
 import Pager from '@/components/Pager'
-import _ from 'lodash'
+// import _ from 'lodash'
 import { getArticles, getBlogEntries } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 
@@ -21,7 +21,8 @@ export default {
   data () {
     return {
       currentPage: 1,
-      perPage: 5
+      perPage: 5,
+      totalCount: 0
       // articles: [],
       // blogEntries: []
     }
@@ -33,9 +34,9 @@ export default {
   //   }
   // },
   computed: {
-    totalCount () {
-      return this.blogEntries.length
-    },
+    // totalCount () {
+    //   return this.blogEntries.length
+    // },
     pageCount () {
       let pageCount = 0
       if (this.totalCount % this.perPage === 0) {
@@ -46,14 +47,14 @@ export default {
       return pageCount
     },
     ...mapState({
-      blogEntries: state => state.app.blogEntries
+      // blogEntries: state => state.app.blogEntries
     })
   },
   methods: {
     getArticleList (page) {
       getBlogEntries().then(response => {
-        this.setBlogEntries(response.sort((a, b) => b.id - a.id))
-        const blogEntries = _.cloneDeep(this.blogEntries)
+        const blogEntries = response.sort((a, b) => b.id - a.id)
+        this.totalCount = blogEntries.length
         getArticles(page, this.perPage).then(response => {
           const start = (page - 1) * this.perPage
           const end = start + this.perPage

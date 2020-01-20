@@ -142,7 +142,8 @@ export default {
     return {
       // tags: [],
       archives: [],
-      isShowTags: false
+      isShowTags: false,
+      result: []
     }
   },
   computed: {
@@ -159,7 +160,6 @@ export default {
     // },
     ...mapState({
       toolbar: state => state.app.toolbar,
-      blogEntries: state => state.app.blogEntries,
       allTags: state => state.app.allTags
     })
   },
@@ -167,9 +167,9 @@ export default {
     keyword (val) {
       const isTag = val.substr(0, 1) === '#'
       if (isTag) {
-        this.archives = this.blogEntries.filter(archive => archive.tags.includes(val.substr(1)))
+        this.archives = this.result.filter(archive => archive.tags.includes(val.substr(1)))
       } else {
-        this.archives = this.blogEntries.filter(archive => archive.name.indexOf(val) > -1)
+        this.archives = this.result.filter(archive => archive.name.indexOf(val) > -1)
       }
     }
   },
@@ -204,8 +204,8 @@ export default {
     },
     getArchivesData () {
       getBlogEntries().then(response => {
-        this.setBlogEntries(response.sort((a, b) => b.id - a.id))
-        this.archives = this.blogEntries
+        this.result = response.sort((a, b) => b.id - a.id)
+        this.archives = response.sort((a, b) => b.id - a.id)
         // console.log(this.archives)
       })
     },

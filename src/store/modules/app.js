@@ -4,7 +4,7 @@ const state = {
     keyword: '',
     tabs: [false, false]
   },
-  blogEntries: [],
+  // blogEntries: [],
   articles: [],
   archives: [],
   article: {},
@@ -28,9 +28,9 @@ const mutations = {
   SET_KEYWORD: (state, keyword) => {
     state.toolbar.keyword = keyword
   },
-  SET_BLOGENTRIES: (state, blogEntries) => {
-    state.blogEntries = blogEntries
-  },
+  // SET_BLOGENTRIES: (state, blogEntries) => {
+  //   state.blogEntries = blogEntries
+  // },
   SET_ARTICLES: (state, articles) => {
     state.articles = articles
   },
