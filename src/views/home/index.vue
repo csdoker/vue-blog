@@ -60,26 +60,23 @@ export default {
           const end = start + this.perPage
           const articles = blogEntries.slice(start, end)
           articles.forEach(article => {
-            // article.summary = () => import(`@/summary/${article.name}.md`)
-            article.summary = response.filter(item => item.number === article.id)[0].body.split('<!--more-->')[0]
-            article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {
+            const data = response.filter(item => item.number === article.id)[0]
+            article.summary = data.body.split('<!--more-->')[0]
+            article.tags = data.labels.map(label => {
               return {
                 name: label.name,
                 color: label.color,
                 id: label.id
               }
             })
-            // article.content = response.filter(item => item.number === article.id)[0].body
           })
           this.setArticles(articles)
-          // console.log(this.articles)
         })
       })
     },
     updatePage (page) {
       this.currentPage = page
       this.getArticleList(page)
-      // this.$router.push({ path: `/home/page/${page}` })
     },
     // setCurrentPage () {
     //   console.log(this.$route)

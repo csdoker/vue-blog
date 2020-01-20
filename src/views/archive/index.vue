@@ -60,8 +60,8 @@ export default {
           const end = start + this.perPage
           const articles = blogEntries.slice(start, end)
           articles.forEach(article => {
-            console.log(response.filter(item => item.number === article.id)[0])
-            article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {
+            const data = response.filter(item => item.number === article.id)[0]
+            article.tags = data.labels.map(label => {
               return {
                 name: label.name,
                 color: label.color,

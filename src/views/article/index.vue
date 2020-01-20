@@ -103,8 +103,10 @@ export default {
       getBlogEntries().then(response => {
         const blogEntries = response.sort((a, b) => b.id - a.id)
         const article = blogEntries.filter(article => article.name === this.$route.params.name)[0]
-        this.setPreviousArticle(article.id === 1 ? {} : blogEntries.filter(item => item.id === article.id - 1)[0])
-        this.setNextArticle(article.id === blogEntries.length ? {} : blogEntries.filter(item => item.id === article.id + 1)[0])
+        const previousArticle = article.id === 1 ? {} : blogEntries.filter(item => item.id === article.id - 1)[0]
+        const nextArticle = article.id === blogEntries.length ? {} : blogEntries.filter(item => item.id === article.id + 1)[0]
+        this.setPreviousArticle(previousArticle)
+        this.setNextArticle(nextArticle)
         getArticle(article.id).then(response => {
           article.content = response.body
           article.tags = response.labels.map(label => {
@@ -114,10 +116,6 @@ export default {
               id: label.id
             }
           })
-          // this.article.content = () => import(`@/post/${this.article.name}.md`)
-          // getArticle(this.article.name).then(response => {
-          //   console.log(response.data)
-          // })
           this.setArticle(article)
         })
       })
