@@ -47,12 +47,9 @@ export default {
     },
     async getArchiveList (page) {
       const blogEntries = await this.getBlogEntries()
-      const result = await this.getArticles({
-        page, perPage: this.perArchiveCount
+      const { result, articles } = await this.getArticles({
+        page, perPage: this.perArchiveCount, blogEntries
       })
-      const start = (page - 1) * this.perArchiveCount
-      const end = start + this.perArchiveCount
-      const articles = blogEntries.slice(start, end)
       articles.forEach(article => {
         const data = result.filter(item => item.number === article.id)[0]
         article.tags = data.labels.map(label => {

@@ -91,11 +91,14 @@ const actions = {
     })
   },
   getArticles ({ commit }, params) {
-    const { page, perPage } = params
+    const { page, perPage, blogEntries } = params
     return new Promise((resolve, reject) => {
       getArticles(page, perPage).then(response => {
         const data = response
-        resolve(data)
+        const start = (page - 1) * perPage
+        const end = start + perPage
+        const articles = blogEntries.slice(start, end)
+        resolve({ result: data, articles })
       }).catch(error => {
         reject(error)
       })

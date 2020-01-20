@@ -47,12 +47,9 @@ export default {
   methods: {
     async getArticleList (page) {
       const blogEntries = await this.getBlogEntries()
-      const result = await this.getArticles({
-        page, perPage: this.perHomeCount
+      const { result, articles } = await this.getArticles({
+        page, perPage: this.perHomeCount, blogEntries
       })
-      const start = (page - 1) * this.perHomeCount
-      const end = start + this.perHomeCount
-      const articles = blogEntries.slice(start, end)
       articles.forEach(article => {
         const data = result.filter(item => item.number === article.id)[0]
         article.summary = data.body.split('<!--more-->')[0]
