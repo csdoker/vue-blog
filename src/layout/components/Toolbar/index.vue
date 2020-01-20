@@ -132,8 +132,8 @@
 
 <script>
 // import BLOGENTRIES from '@/data/blogs.json'
-import { mapState, mapMutations } from 'vuex'
-import { getAllArticles, getBlogEntries } from '@/api/article'
+import { mapState, mapMutations, mapActions } from 'vuex'
+// import { getAllArticles, getBlogEntries } from '@/api/article'
 // import _ from 'lodash'
 
 export default {
@@ -174,24 +174,18 @@ export default {
     }
   },
   methods: {
-    getAllTagsData () {
-      getAllArticles().then(response => {
-        const tags = []
-        response.forEach(article => {
-          article.labels.forEach(tag => {
-            tags.push({
-              name: tag.name,
-              color: tag.color
-            })
+    async getAllTagsData () {
+      const articles = await this.getAllArticles()
+      const tags = []
+      articles.forEach(article => {
+        article.labels.forEach(tag => {
+          tags.push({
+            name: tag.name,
+            color: tag.color
           })
         })
-        this.setAllTags(this.filterSameTags(tags))
-        // this.tags = [...new Set(this.tags)]
-        // this.tags = this.tags.map(tag => ({
-        //   name: tag,
-        //   color: Math.round(1 + Math.random() * 4)
-        // }))
       })
+      this.setAllTags(this.filterSameTags(tags))
     },
     filterSameTags (tags) {
       const result = []
@@ -202,12 +196,10 @@ export default {
       })
       return result
     },
-    getArchivesData () {
-      getBlogEntries().then(response => {
-        this.result = response.sort((a, b) => b.id - a.id)
-        this.archives = response.sort((a, b) => b.id - a.id)
-        // console.log(this.archives)
-      })
+    async getArchivesData () {
+      const blogEntries = await this.getBlogEntries()
+      this.result = blogEntries
+      this.archives = blogEntries
     },
     handleSwitchTab (index) {
       this.toggleTabs(index)
@@ -230,7 +222,8 @@ export default {
       closeToolbar: 'CLOSE_TOOLBAR',
       setAllTags: 'SET_ALL_TAGS',
       setBlogEntries: 'SET_BLOGENTRIES'
-    })
+    }),
+    ...mapActions(['getBlogEntries', 'getAllArticles'])
   },
   created () {
     this.getArchivesData()

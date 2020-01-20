@@ -10,8 +10,8 @@ import ArchiveList from './archive-list'
 import Pager from '@/components/Pager'
 // import BLOGENTRIES from '@/data/blogs.json'
 // import _ from 'lodash'
-import { getArticles, getBlogEntries } from '@/api/article'
-import { mapState, mapMutations } from 'vuex'
+// import { getArticles, getBlogEntries } from '@/api/article'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Archive',
@@ -22,8 +22,8 @@ export default {
   data () {
     return {
       currentPage: 1,
-      perPage: 10,
-      totalCount: 0
+      perPage: 10
+      // totalCount: 0
       // totalCount: BLOGENTRIES.length,
       // blogEntries: [],
       // articles: []
@@ -44,6 +44,7 @@ export default {
     },
     ...mapState({
       // blogEntries: state => state.app.blogEntries
+      totalCount: state => state.app.totalCount
     })
   },
   methods: {
@@ -51,27 +52,25 @@ export default {
       this.currentPage = page
       this.getArchiveList(page)
     },
-    getArchiveList (page) {
-      getBlogEntries().then(response => {
-        const blogEntries = response.sort((a, b) => b.id - a.id)
-        this.totalCount = blogEntries.length
-        getArticles(page, this.perPage).then(response => {
-          const start = (page - 1) * this.perPage
-          const end = start + this.perPage
-          const articles = blogEntries.slice(start, end)
-          articles.forEach(article => {
-            const data = response.filter(item => item.number === article.id)[0]
-            article.tags = data.labels.map(label => {
-              return {
-                name: label.name,
-                color: label.color,
-                id: label.id
-              }
-            })
-          })
-          this.setArchives(this.formatArchives(articles))
+    async getArchiveList (page) {
+      const blogEntries = await this.getBlogEntries()
+      const result = await this.getArticles({
+        page, perPage: this.perPage
+      })
+      const start = (page - 1) * this.perPage
+      const end = start + this.perPage
+      const articles = blogEntries.slice(start, end)
+      articles.forEach(article => {
+        const data = result.filter(item => item.number === article.id)[0]
+        article.tags = data.labels.map(label => {
+          return {
+            name: label.name,
+            color: label.color,
+            id: label.id
+          }
         })
       })
+      this.setArchives(this.formatArchives(articles))
     },
     formatArchives (articles) {
       let chunkResult = this.chunkArr(articles, this.perPage)
@@ -143,7 +142,8 @@ export default {
     ...mapMutations({
       setArchives: 'SET_ARCHIVES',
       setBlogEntries: 'SET_BLOGENTRIES'
-    })
+    }),
+    ...mapActions(['getBlogEntries', 'getArticles'])
   },
   created () {
     // this.blogEntries = _.cloneDeep(BLOGENTRIES)

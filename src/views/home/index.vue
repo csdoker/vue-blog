@@ -9,8 +9,8 @@
 import ArticleList from './article-list'
 import Pager from '@/components/Pager'
 // import _ from 'lodash'
-import { getArticles, getBlogEntries } from '@/api/article'
-import { mapState, mapMutations } from 'vuex'
+// import { getArticles, getBlogEntries } from '@/api/article'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Home',
@@ -21,8 +21,8 @@ export default {
   data () {
     return {
       currentPage: 1,
-      perPage: 5,
-      totalCount: 0
+      perPage: 5
+      // totalCount: 0
       // articles: [],
       // blogEntries: []
     }
@@ -47,32 +47,31 @@ export default {
       return pageCount
     },
     ...mapState({
-      // blogEntries: state => state.app.blogEntries
+      // blogEntries: state => state.app.blogEntries,
+      totalCount: state => state.app.totalCount
     })
   },
   methods: {
-    getArticleList (page) {
-      getBlogEntries().then(response => {
-        const blogEntries = response.sort((a, b) => b.id - a.id)
-        this.totalCount = blogEntries.length
-        getArticles(page, this.perPage).then(response => {
-          const start = (page - 1) * this.perPage
-          const end = start + this.perPage
-          const articles = blogEntries.slice(start, end)
-          articles.forEach(article => {
-            const data = response.filter(item => item.number === article.id)[0]
-            article.summary = data.body.split('<!--more-->')[0]
-            article.tags = data.labels.map(label => {
-              return {
-                name: label.name,
-                color: label.color,
-                id: label.id
-              }
-            })
-          })
-          this.setArticles(articles)
+    async getArticleList (page) {
+      const blogEntries = await this.getBlogEntries()
+      const result = await this.getArticles({
+        page, perPage: this.perPage
+      })
+      const start = (page - 1) * this.perPage
+      const end = start + this.perPage
+      const articles = blogEntries.slice(start, end)
+      articles.forEach(article => {
+        const data = result.filter(item => item.number === article.id)[0]
+        article.summary = data.body.split('<!--more-->')[0]
+        article.tags = data.labels.map(label => {
+          return {
+            name: label.name,
+            color: label.color,
+            id: label.id
+          }
         })
       })
+      this.setArticles(articles)
     },
     updatePage (page) {
       this.currentPage = page
@@ -92,7 +91,8 @@ export default {
     ...mapMutations({
       setArticles: 'SET_ARTICLES',
       setBlogEntries: 'SET_BLOGENTRIES'
-    })
+    }),
+    ...mapActions(['getBlogEntries', 'getArticles'])
   },
   created () {
     this.getArticleList(this.currentPage)

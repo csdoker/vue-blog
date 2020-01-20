@@ -1,3 +1,5 @@
+import { getArticles, getBlogEntries, getArticle, getAllArticles } from '@/api/article'
+
 const state = {
   toolbar: {
     opened: false,
@@ -5,6 +7,7 @@ const state = {
     tabs: [false, false]
   },
   // blogEntries: [],
+  totalCount: 0,
   articles: [],
   archives: [],
   article: {},
@@ -48,10 +51,59 @@ const mutations = {
   },
   SET_NEXT_ARTICLE: (state, article) => {
     state.nextArticle = article
+  },
+  SET_TOTAL_COUNT: (state, totalCount) => {
+    state.totalCount = totalCount
+  }
+}
+
+const actions = {
+  getBlogEntries ({ commit }) {
+    return new Promise((resolve, reject) => {
+      getBlogEntries().then(response => {
+        const data = response.sort((a, b) => b.id - a.id)
+        commit('SET_TOTAL_COUNT', data.length)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getArticles ({ commit }, params) {
+    const { page, perPage } = params
+    return new Promise((resolve, reject) => {
+      getArticles(page, perPage).then(response => {
+        const data = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getArticle ({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      getArticle(id).then(response => {
+        const data = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getAllArticles ({ commit }) {
+    return new Promise((resolve, reject) => {
+      getAllArticles().then(response => {
+        const data = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
 
 export default {
   state,
-  mutations
+  mutations,
+  actions
 }

@@ -67,8 +67,8 @@
 
 <script>
 // import { highlightCode } from '@/utils/highlight.js'
-import { getArticle, getBlogEntries } from '@/api/article'
-import { mapState, mapMutations } from 'vuex'
+// import { getArticle, getBlogEntries } from '@/api/article'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import MarkedContent from '@/components/marked'
 // import _ from 'lodash'
 
@@ -99,26 +99,23 @@ export default {
     })
   },
   methods: {
-    getData () {
-      getBlogEntries().then(response => {
-        const blogEntries = response.sort((a, b) => b.id - a.id)
-        const article = blogEntries.filter(article => article.name === this.$route.params.name)[0]
-        const previousArticle = article.id === 1 ? {} : blogEntries.filter(item => item.id === article.id - 1)[0]
-        const nextArticle = article.id === blogEntries.length ? {} : blogEntries.filter(item => item.id === article.id + 1)[0]
-        this.setPreviousArticle(previousArticle)
-        this.setNextArticle(nextArticle)
-        getArticle(article.id).then(response => {
-          article.content = response.body
-          article.tags = response.labels.map(label => {
-            return {
-              name: label.name,
-              color: label.color,
-              id: label.id
-            }
-          })
-          this.setArticle(article)
-        })
+    async getData () {
+      const blogEntries = await this.getBlogEntries()
+      const article = blogEntries.filter(article => article.name === this.$route.params.name)[0]
+      const previousArticle = article.id === 1 ? {} : blogEntries.filter(item => item.id === article.id - 1)[0]
+      const nextArticle = article.id === blogEntries.length ? {} : blogEntries.filter(item => item.id === article.id + 1)[0]
+      this.setPreviousArticle(previousArticle)
+      this.setNextArticle(nextArticle)
+      const result = await this.getArticle(article.id)
+      article.content = result.body
+      article.tags = result.labels.map(label => {
+        return {
+          name: label.name,
+          color: label.color,
+          id: label.id
+        }
       })
+      this.setArticle(article)
     },
     handleClickTag (name) {
       this.openToolbar()
@@ -131,7 +128,8 @@ export default {
       setPreviousArticle: 'SET_PREVIOUS_ARTICLE',
       setNextArticle: 'SET_NEXT_ARTICLE',
       setBlogEntries: 'SET_BLOGENTRIES'
-    })
+    }),
+    ...mapActions(['getBlogEntries', 'getArticle'])
   }
   // mounted () {
   //   highlightCode()
