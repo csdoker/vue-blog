@@ -185,13 +185,22 @@ export default {
             })
           })
         })
-        this.setAllTags(tags)
+        this.setAllTags(this.filterSameTags(tags))
         // this.tags = [...new Set(this.tags)]
         // this.tags = this.tags.map(tag => ({
         //   name: tag,
         //   color: Math.round(1 + Math.random() * 4)
         // }))
       })
+    },
+    filterSameTags (tags) {
+      const result = []
+      tags.forEach(tag => {
+        if (result.filter(item => item.name === tag.name).length === 0) {
+          result.push(tag)
+        }
+      })
+      return result
     },
     getArchivesData () {
       getBlogEntries().then(response => {
