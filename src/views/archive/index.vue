@@ -9,7 +9,7 @@
 import ArchiveList from './archive-list'
 import Pager from '@/components/Pager'
 // import BLOGENTRIES from '@/data/blogs.json'
-// import _ from 'lodash'
+import _ from 'lodash'
 import { getArticles, getBlogEntries } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 
@@ -53,10 +53,11 @@ export default {
     getArchiveList (page) {
       getBlogEntries().then(response => {
         this.setBlogEntries(response.sort((a, b) => b.id - a.id))
+        const blogEntries = _.cloneDeep(this.blogEntries)
         getArticles(page, this.perPage).then(response => {
           const start = (page - 1) * this.perPage
           const end = start + this.perPage
-          const articles = this.blogEntries.slice(start, end)
+          const articles = blogEntries.slice(start, end)
           articles.forEach(article => {
             console.log(response.filter(item => item.number === article.id)[0])
             article.tags = response.filter(item => item.number === article.id)[0].labels.map(label => {

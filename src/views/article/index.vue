@@ -70,6 +70,7 @@
 import { getArticle, getBlogEntries } from '@/api/article'
 import { mapState, mapMutations } from 'vuex'
 import MarkedContent from '@/components/marked'
+import _ from 'lodash'
 
 export default {
   name: 'Article',
@@ -101,9 +102,10 @@ export default {
     getData () {
       getBlogEntries().then(response => {
         this.setBlogEntries(response.sort((a, b) => b.id - a.id))
-        const article = this.blogEntries.filter(article => article.name === this.$route.params.name)[0]
-        this.setPreviousArticle(article.id === 1 ? {} : this.blogEntries.filter(item => item.id === article.id - 1)[0])
-        this.setNextArticle(article.id === this.blogEntries.length ? {} : this.blogEntries.filter(item => item.id === article.id + 1)[0])
+        const blogEntries = _.cloneDeep(this.blogEntries)
+        const article = blogEntries.filter(article => article.name === this.$route.params.name)[0]
+        this.setPreviousArticle(article.id === 1 ? {} : blogEntries.filter(item => item.id === article.id - 1)[0])
+        this.setNextArticle(article.id === blogEntries.length ? {} : blogEntries.filter(item => item.id === article.id + 1)[0])
         getArticle(article.id).then(response => {
           article.content = response.body
           article.tags = response.labels.map(label => {

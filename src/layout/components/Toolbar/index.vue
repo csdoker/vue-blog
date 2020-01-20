@@ -197,6 +197,7 @@ export default {
       getBlogEntries().then(response => {
         this.setBlogEntries(response.sort((a, b) => b.id - a.id))
         this.archives = this.blogEntries
+        // console.log(this.archives)
       })
     },
     handleSwitchTab (index) {
