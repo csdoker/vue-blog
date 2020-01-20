@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <article-list />
-    <pager :hide-if-one-page="false" :total-page="pageCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
+    <pager :hide-if-one-page="false" :total-page="pagerHomeCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import ArticleList from './article-list'
 import Pager from '@/components/Pager'
 // import _ from 'lodash'
 // import { getArticles, getBlogEntries } from '@/api/article'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
@@ -20,8 +20,8 @@ export default {
   },
   data () {
     return {
-      currentPage: 1,
-      perPage: 5
+      currentPage: 1
+      // perPage: 5
       // totalCount: 0
       // articles: [],
       // blogEntries: []
@@ -37,28 +37,21 @@ export default {
     // totalCount () {
     //   return this.blogEntries.length
     // },
-    pageCount () {
-      let pageCount = 0
-      if (this.totalCount % this.perPage === 0) {
-        pageCount = this.totalCount / this.perPage
-      } else {
-        pageCount = (this.totalCount - this.totalCount % this.perPage) / this.perPage + 1
-      }
-      return pageCount
-    },
     ...mapState({
       // blogEntries: state => state.app.blogEntries,
-      totalCount: state => state.app.totalCount
-    })
+      totalCount: state => state.app.totalCount,
+      perHomeCount: state => state.app.perHomeCount
+    }),
+    ...mapGetters(['pagerHomeCount'])
   },
   methods: {
     async getArticleList (page) {
       const blogEntries = await this.getBlogEntries()
       const result = await this.getArticles({
-        page, perPage: this.perPage
+        page, perPage: this.perHomeCount
       })
-      const start = (page - 1) * this.perPage
-      const end = start + this.perPage
+      const start = (page - 1) * this.perHomeCount
+      const end = start + this.perHomeCount
       const articles = blogEntries.slice(start, end)
       articles.forEach(article => {
         const data = result.filter(item => item.number === article.id)[0]

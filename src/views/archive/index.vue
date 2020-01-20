@@ -1,7 +1,7 @@
 <template>
   <div class="archive-container">
     <archive-list />
-    <pager :hide-if-one-page="false" :total-page="pageCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
+    <pager :hide-if-one-page="false" :total-page="pagerArchiveCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import Pager from '@/components/Pager'
 // import BLOGENTRIES from '@/data/blogs.json'
 // import _ from 'lodash'
 // import { getArticles, getBlogEntries } from '@/api/article'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Archive',
@@ -21,8 +21,8 @@ export default {
   },
   data () {
     return {
-      currentPage: 1,
-      perPage: 10
+      currentPage: 1
+      // perPage: 10
       // totalCount: 0
       // totalCount: BLOGENTRIES.length,
       // blogEntries: [],
@@ -33,19 +33,12 @@ export default {
     // totalCount () {
     //   return this.blogEntries.length
     // },
-    pageCount () {
-      let pageCount = 0
-      if (this.totalCount % this.perPage === 0) {
-        pageCount = this.totalCount / this.perPage
-      } else {
-        pageCount = (this.totalCount - this.totalCount % this.perPage) / this.perPage + 1
-      }
-      return pageCount
-    },
     ...mapState({
       // blogEntries: state => state.app.blogEntries
-      totalCount: state => state.app.totalCount
-    })
+      totalCount: state => state.app.totalCount,
+      perArchiveCount: state => state.app.perArchiveCount
+    }),
+    ...mapGetters(['pagerArchiveCount'])
   },
   methods: {
     updatePage (page) {
@@ -55,10 +48,10 @@ export default {
     async getArchiveList (page) {
       const blogEntries = await this.getBlogEntries()
       const result = await this.getArticles({
-        page, perPage: this.perPage
+        page, perPage: this.perArchiveCount
       })
-      const start = (page - 1) * this.perPage
-      const end = start + this.perPage
+      const start = (page - 1) * this.perArchiveCount
+      const end = start + this.perArchiveCount
       const articles = blogEntries.slice(start, end)
       articles.forEach(article => {
         const data = result.filter(item => item.number === article.id)[0]
@@ -73,7 +66,7 @@ export default {
       this.setArchives(this.formatArchives(articles))
     },
     formatArchives (articles) {
-      let chunkResult = this.chunkArr(articles, this.perPage)
+      let chunkResult = this.chunkArr(articles, this.perArchiveCount)
       let result = []
       for (let i = 0; i < chunkResult.length; i++) {
         // 抽离

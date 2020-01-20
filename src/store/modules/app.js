@@ -6,6 +6,8 @@ const state = {
     keyword: '',
     tabs: [false, false]
   },
+  perHomeCount: 5,
+  perArchiveCount: 10,
   // blogEntries: [],
   totalCount: 0,
   articles: [],
@@ -14,6 +16,25 @@ const state = {
   allTags: [],
   previousArticle: {},
   nextArticle: {}
+}
+
+function getPagerCount (totalCount, perCount) {
+  let pagerCount = 0
+  if (totalCount % perCount === 0) {
+    pagerCount = totalCount / perCount
+  } else {
+    pagerCount = (totalCount - totalCount % perCount) / perCount + 1
+  }
+  return pagerCount
+}
+
+const getters = {
+  pagerHomeCount: state => {
+    return getPagerCount(state.totalCount, state.perHomeCount)
+  },
+  pagerArchiveCount: state => {
+    return getPagerCount(state.totalCount, state.perArchiveCount)
+  }
 }
 
 const mutations = {
@@ -104,6 +125,7 @@ const actions = {
 
 export default {
   state,
+  getters,
   mutations,
   actions
 }
