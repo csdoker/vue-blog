@@ -220,7 +220,7 @@ export default {
     box-shadow: 0 0 6px 0 rgba(0,0,0,.75);
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .sidebar-container {
     display: none
   }

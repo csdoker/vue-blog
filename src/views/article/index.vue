@@ -310,7 +310,7 @@ export default {
 //     }
 //   }
 // }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .article-container {
     padding: 10px 0;
     .article-content {

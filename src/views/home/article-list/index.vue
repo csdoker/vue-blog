@@ -235,7 +235,7 @@ export default {
     }
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .article-list {
     .article-item {
       margin-bottom: 10px;

@@ -52,7 +52,7 @@ export default {
       background: linear-gradient(200deg, #a0cfe4, #e8c37e);
     }
   }
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1024px) {
     .app-wrapper {
       &.show {
         overflow-y: hidden;

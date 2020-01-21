@@ -143,7 +143,7 @@ function unique (array) {
     }
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .pager {
     .pager-nav {
       margin: 0 14px;

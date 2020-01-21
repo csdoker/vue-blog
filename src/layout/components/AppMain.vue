@@ -65,7 +65,7 @@ export default {
     }
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .app-main {
     display: block;
     position: relative;

@@ -653,7 +653,7 @@ export default {
     }
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .toolbar-container {
     width: 100%;
     position: absolute;

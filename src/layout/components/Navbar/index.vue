@@ -63,7 +63,7 @@ export default {
 .navbar-container {
   display: none;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .navbar-container {
     display: block;
 
