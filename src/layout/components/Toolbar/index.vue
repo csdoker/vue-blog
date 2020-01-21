@@ -714,7 +714,7 @@ export default {
     }
     &.hide {
       animation: none;
-      opacity: 0;
+      display: none;
     }
   }
 }
