@@ -75,7 +75,7 @@ export default {
   height: 100%;
   background-color: #fff;
   opacity: 1;
-  transition: all .2s ease-in;
+  // transition: all .2s ease-in;
   z-index: 999;
   .sidebar-overlay {
     position: absolute;

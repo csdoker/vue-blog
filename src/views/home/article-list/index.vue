@@ -132,7 +132,7 @@ export default {
     border-top: none;
     border-bottom: none;
     background-color: #fff;
-    transition: all 0.2s ease-in;
+    // transition: all 0.2s ease-in;
     .article-inner {
       .article-header {
         border-left: 5px solid #4d4d4d;

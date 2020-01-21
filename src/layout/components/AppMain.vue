@@ -42,19 +42,20 @@ export default {
   &.show {
     background: none;
     opacity: .9;
-    -webkit-animation-duration: .8s;
-    animation-duration: .8s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation-name: leftIn;
-    animation-name: leftIn;
+    transform: translateX(330px);
+  //   -webkit-animation-duration: .8s;
+  //   animation-duration: .8s;
+  //   -webkit-animation-fill-mode: both;
+  //   animation-fill-mode: both;
+  //   -webkit-animation-name: leftIn;
+  //   animation-name: leftIn;
   }
-  &.hide {
-    -webkit-animation-duration: .8s;
-    animation-duration: .8s;
-    -webkit-animation-name: leftOut;
-    animation-name: leftOut;
-  }
+  // &.hide {
+  //   -webkit-animation-duration: .8s;
+  //   animation-duration: .8s;
+  //   -webkit-animation-name: leftOut;
+  //   animation-name: leftOut;
+  // }
 }
 @media screen and (max-width: 800px) {
   .app-main {
@@ -64,6 +65,7 @@ export default {
     &.show {
       animation: none;
       opacity: 0;
+      transform: translateX(0);
     }
     &.hide {
       animation: none;

@@ -608,23 +608,27 @@ export default {
 
   &.show {
     opacity: 1;
-    -webkit-animation-duration: 0.8s;
-    animation-duration: 0.8s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation-name: smallLeftIn;
-    animation-name: smallLeftIn;
+    transform: translateX(300px);
+    // transition: all 0.2s ease-in;
+    // -webkit-animation-duration: 0.8s;
+    // animation-duration: 0.8s;
+    // -webkit-animation-fill-mode: both;
+    // animation-fill-mode: both;
+    // -webkit-animation-name: smallLeftIn;
+    // animation-name: smallLeftIn;
   }
 
   &.hide {
     z-index: 0;
-    opacity: 0;
-    -webkit-animation-duration: 0.8s;
-    animation-duration: 0.8s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation-name: smallleftOut;
-    animation-name: smallleftOut;
+    // opacity: 1;
+    transform: translateX(0);
+    // transition: all 0.2s ease-in;
+    // -webkit-animation-duration: 0.8s;
+    // animation-duration: 0.8s;
+    // -webkit-animation-fill-mode: both;
+    // animation-fill-mode: both;
+    // -webkit-animation-name: smallleftOut;
+    // animation-name: smallleftOut;
   }
 }
 @media screen and (max-width: 800px) {
@@ -702,6 +706,7 @@ export default {
       animation: none;
       opacity: 1;
       overflow-y: auto;
+      transform: translateX(0);
       // -webkit-animation-duration: 0.6s;
       // animation-duration: 0.6s;
       // -webkit-animation-name: bounceInLeft;
