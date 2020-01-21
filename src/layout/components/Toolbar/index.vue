@@ -179,22 +179,15 @@ export default {
       const tags = []
       articles.forEach(article => {
         article.labels.forEach(tag => {
-          tags.push({
-            name: tag.name,
-            color: tag.color
-          })
+          if (tags.filter(item => item.name === tag.name).length === 0) {
+            tags.push({
+              name: tag.name,
+              color: tag.color
+            })
+          }
         })
       })
-      this.setAllTags(this.filterSameTags(tags))
-    },
-    filterSameTags (tags) {
-      const result = []
-      tags.forEach(tag => {
-        if (result.filter(item => item.name === tag.name).length === 0) {
-          result.push(tag)
-        }
-      })
-      return result
+      this.setAllTags(tags)
     },
     async getArchivesData () {
       const blogEntries = await this.getBlogEntries()
