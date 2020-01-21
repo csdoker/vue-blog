@@ -631,11 +631,9 @@ export default {
     // animation-name: smallleftOut;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1366px) {
   .toolbar-container {
-    width: 100%;
-    position: absolute;
-
+    width: calc(100% - 300px);
     .toolbar-close {
       display: flex;
       align-items: center;
@@ -646,6 +644,19 @@ export default {
         font-size: 30px;
       }
     }
+    .toolbar-body {
+      overflow: unset;
+      overflow-y: unset;
+    }
+    &.show {
+      overflow-y: auto;
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  .toolbar-container {
+    width: 100%;
+    position: absolute;
 
     .toolbar-headar {
       display: block;

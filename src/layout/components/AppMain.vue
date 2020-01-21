@@ -42,7 +42,8 @@ export default {
   &.show {
     background: none;
     opacity: .9;
-    transform: translateX(330px);
+    left: 630px;
+    // transform: translateX(330px);
   //   -webkit-animation-duration: .8s;
   //   animation-duration: .8s;
   //   -webkit-animation-fill-mode: both;
@@ -57,8 +58,16 @@ export default {
   //   animation-name: leftOut;
   // }
 }
+@media screen and (max-width: 1366px) {
+  .app-main {
+    &.show {
+      display: none;
+    }
+  }
+}
 @media screen and (max-width: 800px) {
   .app-main {
+    display: block;
     position: relative;
     left: 0;
 
@@ -66,6 +75,7 @@ export default {
       animation: none;
       opacity: 0;
       transform: translateX(0);
+      left: 0;
     }
     &.hide {
       animation: none;
