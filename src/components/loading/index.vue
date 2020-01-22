@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-wrapper">
+  <div class="loading-wrapper" @click.stop>
     <div class="loading">
       <div></div>
       <div></div>
