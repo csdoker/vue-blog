@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container" v-show="!loadingStatus">
+  <div class="home-container" v-show="articles.length !== 0">
     <article-list />
     <pager :hide-if-one-page="false" :total-page="pagerHomeCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
@@ -38,7 +38,7 @@ export default {
     //   return this.blogEntries.length
     // },
     ...mapState({
-      // blogEntries: state => state.app.blogEntries,
+      articles: state => state.app.articles,
       totalCount: state => state.app.totalCount,
       perHomeCount: state => state.app.perHomeCount,
       loadingStatus: state => state.app.loadingStatus
