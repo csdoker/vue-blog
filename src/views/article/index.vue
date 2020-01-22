@@ -1,5 +1,5 @@
 <template>
-  <div class="article-container">
+  <div class="article-container" v-show="!loadingStatus">
     <article class="article-content" :class="{show: toolbar.opened}">
       <div class="article-inner">
         <header class="article-header">
@@ -95,7 +95,8 @@ export default {
       article: state => state.app.article,
       // blogEntries: state => state.app.blogEntries,
       previousArticle: state => state.app.previousArticle,
-      nextArticle: state => state.app.nextArticle
+      nextArticle: state => state.app.nextArticle,
+      loadingStatus: state => state.app.loadingStatus
     })
   },
   methods: {

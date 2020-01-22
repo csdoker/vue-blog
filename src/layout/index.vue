@@ -4,6 +4,7 @@
     <sidebar />
     <toolbar />
     <app-main />
+    <loading v-show="loadingStatus" />
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import { AppCanvas, Sidebar, Toolbar, AppMain } from './components'
 // import BLOGENTRIES from '@/data/blogs.json'
 import { mapState, mapMutations } from 'vuex'
+import Loading from '@/components/loading'
 
 export default {
   name: 'Layout',
@@ -18,11 +20,13 @@ export default {
     AppCanvas,
     Sidebar,
     Toolbar,
-    AppMain
+    AppMain,
+    Loading
   },
   computed: {
     ...mapState({
-      toolbar: state => state.app.toolbar
+      toolbar: state => state.app.toolbar,
+      loadingStatus: state => state.app.loadingStatus
     })
   },
   methods: {

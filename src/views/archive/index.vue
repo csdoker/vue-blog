@@ -1,5 +1,5 @@
 <template>
-  <div class="archive-container">
+  <div class="archive-container" v-show="!loadingStatus">
     <archive-list />
     <pager :hide-if-one-page="false" :total-page="pagerArchiveCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
@@ -36,7 +36,8 @@ export default {
     ...mapState({
       // blogEntries: state => state.app.blogEntries
       totalCount: state => state.app.totalCount,
-      perArchiveCount: state => state.app.perArchiveCount
+      perArchiveCount: state => state.app.perArchiveCount,
+      loadingStatus: state => state.app.loadingStatus
     }),
     ...mapGetters(['pagerArchiveCount'])
   },
