@@ -4,7 +4,9 @@ const state = {
   toolbar: {
     opened: false,
     keyword: '',
-    tabs: [false, false]
+    tabs: [false, false],
+    list: [],
+    archives: []
   },
   perHomeCount: 5,
   perArchiveCount: 10,
@@ -50,7 +52,7 @@ const mutations = {
     state.toolbar.tabs = [false, false]
     state.toolbar.tabs[index] = true
   },
-  SET_KEYWORD: (state, keyword) => {
+  SET_TOOLBAR_KEYWORD: (state, keyword) => {
     state.toolbar.keyword = keyword
   },
   // SET_BLOGENTRIES: (state, blogEntries) => {
@@ -62,7 +64,7 @@ const mutations = {
   SET_ARCHIVES: (state, archives) => {
     state.archives = archives
   },
-  SET_ALL_TAGS: (state, allTags) => {
+  SET_TOOLBAR_ALL_TAGS: (state, allTags) => {
     state.allTags = allTags
   },
   SET_ARTICLE: (state, article) => {
@@ -79,16 +81,47 @@ const mutations = {
   },
   SET_LOADING_STATUS: (state, status) => {
     state.loadingStatus = status
+  },
+  SET_TOOLBAR_LIST: (state, list) => {
+    state.toolbar.list = list
+  },
+  SET_TOOLBAR_ARCHIVES: (state, archives) => {
+    state.toolbar.archives = archives
   }
 }
 
 const actions = {
+  openToolbar ({ commit, dispatch }, keyword) {
+    return new Promise(async (resolve, reject) => {
+      commit('SET_LOADING_STATUS', true)
+      commit('OPEN_TOOLBAR')
+      const blogEntries = await dispatch('getBlogEntries')
+      commit('SET_TOOLBAR_ARCHIVES', blogEntries)
+      commit('SET_TOOLBAR_LIST', blogEntries)
+      const articles = await dispatch('getAllArticles')
+      const tags = []
+      articles.forEach(article => {
+        article.labels.forEach(tag => {
+          if (tags.filter(item => item.name === tag.name).length === 0) {
+            tags.push({
+              name: tag.name,
+              color: tag.color
+            })
+          }
+        })
+      })
+      commit('SET_TOOLBAR_ALL_TAGS', tags)
+      commit('SET_TOOLBAR_KEYWORD', keyword)
+      commit('SET_LOADING_STATUS', false)
+      resolve()
+    })
+  },
   getBlogEntries ({ commit }) {
     return new Promise((resolve, reject) => {
       getBlogEntries().then(response => {
-        const data = response.sort((a, b) => b.id - a.id)
-        commit('SET_TOTAL_COUNT', data.length)
-        resolve(data)
+        const blogEntries = response.sort((a, b) => b.id - a.id)
+        commit('SET_TOTAL_COUNT', blogEntries.length)
+        resolve(blogEntries)
       }).catch(error => {
         reject(error)
       })

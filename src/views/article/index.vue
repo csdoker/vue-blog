@@ -121,19 +121,18 @@ export default {
       this.setLoadingStatus(false)
     },
     handleClickTag (name) {
-      this.openToolbar()
-      this.setKeyword(`#${name}`)
+      this.openToolbar(`#${name}`)
+      // this.setToolbarKeyword()
     },
     ...mapMutations({
-      openToolbar: 'OPEN_TOOLBAR',
-      setKeyword: 'SET_KEYWORD',
+      setToolbarKeyword: 'SET_TOOLBAR_KEYWORD',
       setArticle: 'SET_ARTICLE',
       setPreviousArticle: 'SET_PREVIOUS_ARTICLE',
       setNextArticle: 'SET_NEXT_ARTICLE',
       setBlogEntries: 'SET_BLOGENTRIES',
       setLoadingStatus: 'SET_LOADING_STATUS'
     }),
-    ...mapActions(['getBlogEntries', 'getArticle'])
+    ...mapActions(['getBlogEntries', 'getArticle', 'openToolbar'])
   }
   // mounted () {
   //   highlightCode()

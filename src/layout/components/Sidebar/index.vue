@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Sidebar',
@@ -57,13 +57,15 @@ export default {
       return this.routes.filter(item => !item.hidden)[0].children.filter(item => !item.hidden)
     },
     handleClickMenu (index) {
-      this.openToolbar()
+      if (!toolbar.opened) {
+        this.openToolbar('')
+      }
       this.toggleTabs(index)
     },
     ...mapMutations({
-      openToolbar: 'OPEN_TOOLBAR',
       toggleTabs: 'TOGGLE_TABS'
-    })
+    }),
+    ...mapActions(['openToolbar'])
   }
 }
 </script>

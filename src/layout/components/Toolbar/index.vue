@@ -65,7 +65,7 @@
         <ul class="archive-list">
           <li
             class="archive-item"
-            v-for="archive in archives"
+            v-for="archive in toolbar.archives"
             :key="archive.id"
           >
             <a href="javascript:;" class="item-title">
@@ -142,8 +142,8 @@ export default {
     return {
       // tags: [],
       archives: [],
-      isShowTags: false,
-      result: []
+      isShowTags: false
+      // result: []
     }
   },
   computed: {
@@ -152,7 +152,7 @@ export default {
         return this.toolbar.keyword
       },
       set (newVal) {
-        this.setKeyword(newVal)
+        this.setToolbarKeyword(newVal)
       }
     },
     // articles () {
@@ -167,33 +167,33 @@ export default {
     keyword (val) {
       const isTag = val.substr(0, 1) === '#'
       if (isTag) {
-        this.archives = this.result.filter(archive => archive.tags.includes(val.substr(1)))
+        this.setToolbarArchives(this.toolbar.list.filter(archive => archive.tags.includes(val.substr(1))))
       } else {
-        this.archives = this.result.filter(archive => archive.name.indexOf(val) > -1)
+        this.setToolbarArchives(this.toolbar.list.filter(archive => archive.name.indexOf(val) > -1))
       }
     }
   },
   methods: {
-    async getAllTagsData () {
-      const articles = await this.getAllArticles()
-      const tags = []
-      articles.forEach(article => {
-        article.labels.forEach(tag => {
-          if (tags.filter(item => item.name === tag.name).length === 0) {
-            tags.push({
-              name: tag.name,
-              color: tag.color
-            })
-          }
-        })
-      })
-      this.setAllTags(tags)
-    },
-    async getArchivesData () {
-      const blogEntries = await this.getBlogEntries()
-      this.result = blogEntries
-      this.archives = blogEntries
-    },
+    // async getAllTagsData () {
+    //   const articles = await this.getAllArticles()
+    //   const tags = []
+    //   articles.forEach(article => {
+    //     article.labels.forEach(tag => {
+    //       if (tags.filter(item => item.name === tag.name).length === 0) {
+    //         tags.push({
+    //           name: tag.name,
+    //           color: tag.color
+    //         })
+    //       }
+    //     })
+    //   })
+    //   this.setToolbarAllTags(tags)
+    // },
+    // async getArchivesData () {
+    //   const blogEntries = await this.getBlogEntries()
+    //   this.result = blogEntries
+    //   this.archives = blogEntries
+    // },
     handleSwitchTab (index) {
       this.toggleTabs(index)
     },
@@ -201,7 +201,7 @@ export default {
       this.isShowTags = !this.isShowTags
     },
     handleTagClick (tag) {
-      this.setKeyword(`#${tag}`)
+      this.setToolbarKeyword(`#${tag}`)
     },
     handleTitleClick (title) {
       if (this.$route.params.name !== title) {
@@ -211,16 +211,16 @@ export default {
     },
     ...mapMutations({
       toggleTabs: 'TOGGLE_TABS',
-      setKeyword: 'SET_KEYWORD',
+      setToolbarKeyword: 'SET_TOOLBAR_KEYWORD',
       closeToolbar: 'CLOSE_TOOLBAR',
-      setAllTags: 'SET_ALL_TAGS',
-      setBlogEntries: 'SET_BLOGENTRIES'
+      setToolbarAllTags: 'SET_TOOLBAR_ALL_TAGS',
+      setToolbarArchives: 'SET_TOOLBAR_ARCHIVES'
     }),
     ...mapActions(['getBlogEntries', 'getAllArticles'])
   },
   created () {
-    this.getArchivesData()
-    this.getAllTagsData()
+    // this.getArchivesData()
+    // this.getAllTagsData()
   }
 }
 </script>

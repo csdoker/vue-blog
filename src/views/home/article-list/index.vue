@@ -53,7 +53,7 @@
 <script>
 // import BLOGENTRIES from '@/data/blogs.json'
 // import { highlightCode } from '@/utils/highlight.js'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import MarkedContent from '@/components/marked'
 
 // const components = {}
@@ -100,13 +100,13 @@ export default {
     //   return `article-summary-${id}`
     // }
     handleClickTag (name) {
-      this.openToolbar()
-      this.setKeyword(`#${name}`)
+      this.openToolbar(`#${name}`)
+      // this.setToolbarKeyword()
     },
     ...mapMutations({
-      openToolbar: 'OPEN_TOOLBAR',
-      setKeyword: 'SET_KEYWORD'
-    })
+      setToolbarKeyword: 'SET_TOOLBAR_KEYWORD'
+    }),
+    ...mapActions(['openToolbar'])
   },
   // mounted () {
   //   highlightCode()

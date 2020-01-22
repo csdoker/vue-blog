@@ -29,7 +29,7 @@
 
 <script>
 // import BLOGENTRIES from '@/data/blogs.json'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'ArchiveList',
@@ -56,13 +56,13 @@ export default {
   },
   methods: {
     handleClickTag (name) {
-      this.openToolbar()
-      this.setKeyword(`#${name}`)
+      this.openToolbar(`#${name}`)
+      // this.setToolbarKeyword()
     },
     ...mapMutations({
-      openToolbar: 'OPEN_TOOLBAR',
-      setKeyword: 'SET_KEYWORD'
-    })
+      setToolbarKeyword: 'SET_TOOLBAR_KEYWORD'
+    }),
+    ...mapActions(['openToolbar'])
   }
 }
 </script>
