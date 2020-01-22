@@ -4,24 +4,28 @@
     <transition name="fade-transform" mode="out-in">
       <router-view :key="key" />
     </transition>
+    <loading v-show="loadingStatus" />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import Navbar from './Navbar'
+import Loading from '@/components/loading'
 
 export default {
   name: 'AppMain',
   components: {
-    Navbar
+    Navbar,
+    Loading
   },
   computed: {
     key () {
       return this.$route.path
     },
     ...mapState({
-      toolbar: state => state.app.toolbar
+      toolbar: state => state.app.toolbar,
+      loadingStatus: state => state.app.loadingStatus
     })
   }
 }

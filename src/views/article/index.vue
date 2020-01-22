@@ -100,6 +100,7 @@ export default {
   },
   methods: {
     async getData () {
+      this.setLoadingStatus(true)
       const blogEntries = await this.getBlogEntries()
       const article = blogEntries.filter(article => article.name === this.$route.params.name)[0]
       const previousArticle = article.id === 1 ? {} : blogEntries.filter(item => item.id === article.id - 1)[0]
@@ -116,6 +117,7 @@ export default {
         }
       })
       this.setArticle(article)
+      this.setLoadingStatus(false)
     },
     handleClickTag (name) {
       this.openToolbar()
@@ -127,7 +129,8 @@ export default {
       setArticle: 'SET_ARTICLE',
       setPreviousArticle: 'SET_PREVIOUS_ARTICLE',
       setNextArticle: 'SET_NEXT_ARTICLE',
-      setBlogEntries: 'SET_BLOGENTRIES'
+      setBlogEntries: 'SET_BLOGENTRIES',
+      setLoadingStatus: 'SET_LOADING_STATUS'
     }),
     ...mapActions(['getBlogEntries', 'getArticle'])
   }

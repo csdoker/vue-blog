@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container">
+  <div class="home-container" v-show="!loadingStatus">
     <article-list />
     <pager :hide-if-one-page="false" :total-page="pagerHomeCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>
@@ -40,12 +40,14 @@ export default {
     ...mapState({
       // blogEntries: state => state.app.blogEntries,
       totalCount: state => state.app.totalCount,
-      perHomeCount: state => state.app.perHomeCount
+      perHomeCount: state => state.app.perHomeCount,
+      loadingStatus: state => state.app.loadingStatus
     }),
     ...mapGetters(['pagerHomeCount'])
   },
   methods: {
     async getArticleList (page) {
+      this.setLoadingStatus(true)
       const blogEntries = await this.getBlogEntries()
       const { result, articles } = await this.getArticles({
         page, perPage: this.perHomeCount, blogEntries
@@ -62,6 +64,7 @@ export default {
         })
       })
       this.setArticles(articles)
+      this.setLoadingStatus(false)
     },
     updatePage (page) {
       this.currentPage = page
@@ -80,7 +83,8 @@ export default {
     // }
     ...mapMutations({
       setArticles: 'SET_ARTICLES',
-      setBlogEntries: 'SET_BLOGENTRIES'
+      setBlogEntries: 'SET_BLOGENTRIES',
+      setLoadingStatus: 'SET_LOADING_STATUS'
     }),
     ...mapActions(['getBlogEntries', 'getArticles'])
   },

@@ -15,7 +15,8 @@ const state = {
   article: {},
   allTags: [],
   previousArticle: {},
-  nextArticle: {}
+  nextArticle: {},
+  loadingStatus: true
 }
 
 function getPagerCount (totalCount, perCount) {
@@ -75,6 +76,9 @@ const mutations = {
   },
   SET_TOTAL_COUNT: (state, totalCount) => {
     state.totalCount = totalCount
+  },
+  SET_LOADING_STATUS: (state, status) => {
+    state.loadingStatus = status
   }
 }
 

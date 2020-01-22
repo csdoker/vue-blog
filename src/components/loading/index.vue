@@ -1,8 +1,10 @@
 <template>
-  <div class="loading">
-    <div></div>
-    <div></div>
-    <div></div>
+  <div class="loading-wrapper">
+    <div class="loading">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
 
@@ -13,8 +15,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255, .5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+}
 .loading {
   position: relative;
+  transform: translateX(-30px) translateY(-30px);
 }
 .loading > div {
   position: absolute;

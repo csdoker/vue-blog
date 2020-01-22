@@ -46,6 +46,7 @@ export default {
       this.getArchiveList(page)
     },
     async getArchiveList (page) {
+      this.setLoadingStatus(true)
       const blogEntries = await this.getBlogEntries()
       const { result, articles } = await this.getArticles({
         page, perPage: this.perArchiveCount, blogEntries
@@ -61,6 +62,7 @@ export default {
         })
       })
       this.setArchives(this.formatArchives(articles))
+      this.setLoadingStatus(false)
     },
     formatArchives (articles) {
       let chunkResult = this.chunkArr(articles, this.perArchiveCount)
@@ -131,7 +133,8 @@ export default {
     },
     ...mapMutations({
       setArchives: 'SET_ARCHIVES',
-      setBlogEntries: 'SET_BLOGENTRIES'
+      setBlogEntries: 'SET_BLOGENTRIES',
+      setLoadingStatus: 'SET_LOADING_STATUS'
     }),
     ...mapActions(['getBlogEntries', 'getArticles'])
   },
