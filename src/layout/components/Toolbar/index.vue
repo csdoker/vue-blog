@@ -275,6 +275,8 @@ export default {
           font-size: 16px;
           line-height: 28px;
           -webkit-user-modify: read-write-plaintext-only;
+          -webkit-appearance: none;
+          border-radius: 0;
 
           &::-webkit-input-placeholder {
             color: #ededed;
@@ -310,19 +312,20 @@ export default {
           }
 
           .tag-checkbox {
+            width: 42px;
+            height: 16px;
+            border: 1px solid #bdcabc;
             position: relative;
             display: flex;
             z-index: 2;
-            border: 0;
             background: 0 0;
             -webkit-appearance: none;
             outline: 0;
 
             &:before {
               content: '';
-              width: 40px;
-              height: 14px;
-              border: 1px solid #bdcabc;
+              width: 100%;
+              height: 100%;
               background-color: #fdfdfd;
               border-radius: 20px;
               cursor: pointer;
@@ -334,10 +337,10 @@ export default {
 
             &:after {
               content: '';
-              width: 14px;
-              height: 14px;
+              width: 16px;
+              height: 16px;
               position: absolute;
-              top: 8px;
+              top: 7px;
               left: 0;
               -webkit-transform: translateY(-50%);
               border-radius: 100%;
