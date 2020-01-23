@@ -5,6 +5,7 @@
     class="toolbar-container"
     @click.stop
     :class="{ show: toolbar.opened, hide: !toolbar.opened }"
+    v-show="!loadingStatus"
   >
     <div class="toolbar-close">
       <i class="close-icon iconfont icon-close-circle" @click="closeToolbar"></i>
@@ -160,7 +161,8 @@ export default {
     // },
     ...mapState({
       toolbar: state => state.app.toolbar,
-      allTags: state => state.app.allTags
+      allTags: state => state.app.allTags,
+      loadingStatus: state => state.app.loadingStatus
     })
   },
   watch: {

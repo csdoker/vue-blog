@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container" v-show="articles.length !== 0">
+  <div class="home-container" v-show="!loadingStatus">
     <article-list />
     <pager :hide-if-one-page="false" :total-page="pagerHomeCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>

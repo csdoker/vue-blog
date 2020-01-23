@@ -1,5 +1,5 @@
 <template>
-  <div class="archive-container" v-show="archives.length !== 0">
+  <div class="archive-container" v-show="!loadingStatus">
     <archive-list />
     <pager :hide-if-one-page="false" :total-page="pagerArchiveCount" :current-page.sync="currentPage" @update:currentPage="updatePage" />
   </div>

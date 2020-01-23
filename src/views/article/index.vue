@@ -1,5 +1,5 @@
 <template>
-  <div class="article-container" v-show="article.content">
+  <div class="article-container" v-show="!loadingStatus">
     <article class="article-content" :class="{show: toolbar.opened}">
       <div class="article-inner">
         <header class="article-header">
