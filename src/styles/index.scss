@@ -383,6 +383,10 @@ textarea {
   padding: 0;
 }
 
+[type='checkbox'] {
+  -webkit-appearance: checkbox;
+}
+
 [type='number']::-webkit-inner-spin-button,
 [type='number']::-webkit-outer-spin-button {
   height: auto;
